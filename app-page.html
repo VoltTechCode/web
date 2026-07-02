@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <!-- ═══ SEO — تُملأ ديناميكياً من Firebase ═══ -->
+  <title id="meta-title">جارٍ التحميل... | فولت تك</title>
+  <meta name="description"        id="meta-desc"     content=""/>
+  <meta name="keywords"           id="meta-keywords"  content=""/>
+  <meta name="robots"             content="index, follow"/>
+  <link rel="canonical"           id="meta-canonical" href=""/>
+
+  <!-- Open Graph -->
+  <meta property="og:type"        content="website"/>
+  <meta property="og:site_name"   content="فولت تك | Volt Tech"/>
+  <meta property="og:title"       id="og-title"       content=""/>
+  <meta property="og:description" id="og-desc"        content=""/>
+  <meta property="og:image"       id="og-image"       content=""/>
+  <meta property="og:url"         id="og-url"         content=""/>
+  <meta property="og:locale"      content="ar_AR"/>
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card"        content="summary_large_image"/>
+  <meta name="twitter:title"       id="tw-title"      content=""/>
+  <meta name="twitter:description" id="tw-desc"       content=""/>
+  <meta name="twitter:image"       id="tw-image"      content=""/>
+
+  <!-- JSON-LD Structured Data — SoftwareApplication -->
+  <script type="application/ld+json" id="jsonld-app">{}</script>
+
+  <!-- Breadcrumb JSON-LD -->
+  <script type="application/ld+json" id="jsonld-breadcrumb">{}</script>
+
+  <link rel="manifest" href="/manifest.json"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:          #0f0f13;
+      --bg2:         #17171e;
+      --bg3:         #1e1e28;
+      --bg4:         #252532;
+      --border:      rgba(255,255,255,0.07);
+      --border2:     rgba(255,255,255,0.14);
+      --text1:       #f0f0f5;
+      --text2:       #9999b2;
+      --text3:       #55556a;
+      --accent:      #6c63ff;
+      --accent-h:    #7b73ff;
+      --accent-soft: rgba(108,99,255,0.12);
+      --accent-glow: rgba(108,99,255,0.2);
+      --success:     #22c55e;
+      --warning:     #f59e0b;
+      --danger:      #ef4444;
+      --r-sm: 8px; --r-md: 14px; --r-lg: 20px; --r-xl: 28px;
+      --shadow: 0 4px 32px rgba(0,0,0,0.5);
+      --tr: 0.2s cubic-bezier(0.4,0,0.2,1);
+      --font: 'Cairo', system-ui, sans-serif;
+      --max: 900px;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font); background: var(--bg); color: var(--text1); min-height: 100dvh; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+    ::-webkit-scrollbar { width: 4px; } ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 4px; }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; }
+
+    /* ═══ HEADER ═══ */
+    #site-header {
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(15,15,19,0.9); backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 20px; height: 56px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .header-logo { display: flex; align-items: center; gap: 8px; }
+    .logo-bolt { width: 32px; height: 32px; background: var(--accent); border-radius: 9px; display: flex; align-items: center; justify-content: center; font-size: 17px; font-weight: 900; color: #fff; flex-shrink: 0; }
+    .logo-name { font-size: 16px; font-weight: 800; }
+    .logo-name span { color: var(--accent); }
+    .header-back { display: flex; align-items: center; gap: 6px; font-size: 14px; color: var(--text2); background: var(--bg3); border: 1px solid var(--border); border-radius: 20px; padding: 6px 14px; transition: all var(--tr); cursor: pointer; }
+    .header-back:hover { color: var(--text1); border-color: var(--border2); }
+
+    /* ═══ BREADCRUMB ═══ */
+    .breadcrumb { max-width: var(--max); margin: 0 auto; padding: 12px 20px; display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text3); flex-wrap: wrap; }
+    .breadcrumb a { color: var(--text2); transition: color var(--tr); }
+    .breadcrumb a:hover { color: var(--accent); }
+    .breadcrumb-sep { color: var(--text3); }
+
+    /* ═══ MAIN LAYOUT ═══ */
+    .page-wrap { max-width: var(--max); margin: 0 auto; padding: 0 20px 60px; }
+
+    /* ═══ HERO SECTION ═══ */
+    .hero { display: flex; gap: 20px; align-items: flex-start; padding: 20px 0 24px; }
+    .hero-icon-wrap { flex-shrink: 0; position: relative; }
+    .hero-icon {
+      width: 96px; height: 96px; border-radius: 22px;
+      background: var(--accent-soft); border: 1px solid var(--border2);
+      overflow: hidden; display: flex; align-items: center; justify-content: center;
+      font-size: 40px; box-shadow: var(--shadow);
+    }
+    .hero-icon img { width: 100%; height: 100%; object-fit: cover; }
+    .hero-badge-wrap { position: absolute; bottom: -6px; right: -6px; background: var(--accent); border-radius: 8px; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; font-size: 12px; border: 2px solid var(--bg); }
+    .hero-info { flex: 1; min-width: 0; }
+    .hero-name { font-size: 26px; font-weight: 900; line-height: 1.2; margin-bottom: 4px; }
+    .hero-dev { font-size: 14px; color: var(--accent); font-weight: 600; margin-bottom: 8px; }
+    .hero-dev-link { color: var(--accent); } .hero-dev-link:hover { text-decoration: underline; }
+    .hero-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
+    .hero-tag { font-size: 12px; padding: 3px 10px; background: var(--bg3); border: 1px solid var(--border2); border-radius: 20px; color: var(--text2); }
+    .hero-tag.hot { background: rgba(239,68,68,0.12); border-color: rgba(239,68,68,0.3); color: var(--danger); }
+    .hero-tag.new { background: rgba(34,197,94,0.12); border-color: rgba(34,197,94,0.3); color: var(--success); }
+    .hero-tag.free { background: rgba(34,197,94,0.1); border-color: rgba(34,197,94,0.2); color: var(--success); }
+
+    /* ═══ RATING ROW ═══ */
+    .rating-row { display: flex; align-items: center; gap: 16px; margin-bottom: 18px; flex-wrap: wrap; }
+    .rating-big { display: flex; flex-direction: column; align-items: center; }
+    .rating-num { font-size: 32px; font-weight: 900; color: var(--warning); line-height: 1; }
+    .rating-stars { font-size: 13px; color: var(--warning); margin-top: 2px; }
+    .rating-count { font-size: 11px; color: var(--text3); margin-top: 2px; }
+    .rating-divider { width: 1px; height: 40px; background: var(--border2); }
+    .rating-stat { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+    .rating-stat-val { font-size: 16px; font-weight: 700; }
+    .rating-stat-lbl { font-size: 11px; color: var(--text3); }
+
+    /* ═══ DOWNLOAD BUTTON ═══ */
+    .dl-section { display: flex; gap: 10px; align-items: center; margin-bottom: 6px; }
+    .btn-download {
+      height: 52px; padding: 0 32px;
+      background: var(--accent); color: #fff; border: none;
+      border-radius: var(--r-md); font-family: var(--font);
+      font-size: 16px; font-weight: 700; cursor: pointer;
+      display: flex; align-items: center; gap: 8px;
+      transition: background var(--tr), transform var(--tr), box-shadow var(--tr);
+      box-shadow: 0 4px 20px var(--accent-glow);
+    }
+    .btn-download:hover { background: var(--accent-h); transform: translateY(-1px); box-shadow: 0 6px 28px var(--accent-glow); }
+    .btn-download:active { transform: translateY(0); }
+    .btn-share { width: 52px; height: 52px; background: var(--bg3); border: 1px solid var(--border2); border-radius: var(--r-md); display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 20px; transition: all var(--tr); }
+    .btn-share:hover { background: var(--bg4); border-color: var(--accent); }
+    .btn-fav { width: 52px; height: 52px; background: var(--bg3); border: 1px solid var(--border2); border-radius: var(--r-md); display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 20px; transition: all var(--tr); }
+    .btn-fav:hover { background: rgba(239,68,68,0.1); border-color: rgba(239,68,68,0.3); }
+    .btn-fav.active { background: rgba(239,68,68,0.12); border-color: rgba(239,68,68,0.3); }
+    .dl-note { font-size: 12px; color: var(--text3); }
+
+    /* ═══ HEADER IMAGE ═══ */
+    .header-img-wrap { margin: 0 -20px 24px; overflow: hidden; max-height: 240px; position: relative; }
+    .header-img-wrap img { width: 100%; height: 240px; object-fit: cover; }
+    .header-img-wrap::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 60%, var(--bg) 100%); }
+
+    /* ═══ STATS GRID ═══ */
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: var(--r-lg); overflow: hidden; margin-bottom: 28px; }
+    @media(max-width:520px) { .stats-grid { grid-template-columns: repeat(2,1fr); } }
+    .stat-cell { background: var(--bg3); padding: 16px 12px; text-align: center; }
+    .stat-val { font-size: 18px; font-weight: 800; margin-bottom: 4px; }
+    .stat-val.accent { color: var(--accent); }
+    .stat-val.warning { color: var(--warning); }
+    .stat-val.success { color: var(--success); }
+    .stat-lbl { font-size: 11px; color: var(--text3); }
+
+    /* ═══ SECTION ═══ */
+    .section { margin-bottom: 32px; }
+    .section-title { font-size: 18px; font-weight: 800; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+    .section-title::after { content: ''; flex: 1; height: 1px; background: var(--border2); }
+
+    /* ═══ SCREENSHOTS ═══ */
+    .screenshots-track { display: flex; gap: 10px; overflow-x: auto; scrollbar-width: none; padding-bottom: 4px; }
+    .screenshots-track::-webkit-scrollbar { display: none; }
+    .screenshot { flex: 0 0 auto; height: 220px; width: auto; border-radius: var(--r-md); border: 1px solid var(--border2); object-fit: cover; cursor: pointer; transition: transform var(--tr); background: var(--bg3); }
+    .screenshot:hover { transform: scale(1.02); }
+
+    /* ═══ DESCRIPTION ═══ */
+    .desc-text { font-size: 14px; color: var(--text2); line-height: 1.85; direction: rtl; }
+    .desc-text.collapsed { display: -webkit-box; -webkit-line-clamp: 5; -webkit-box-orient: vertical; overflow: hidden; }
+    .read-more-btn { font-size: 13px; color: var(--accent); cursor: pointer; margin-top: 8px; display: inline-block; font-weight: 600; }
+    .read-more-btn:hover { text-decoration: underline; }
+
+    /* ═══ CONDITIONS ═══ */
+    .cond-list { display: flex; flex-direction: column; gap: 8px; }
+    .cond-item { display: flex; gap: 12px; align-items: flex-start; padding: 12px 14px; background: var(--bg3); border: 1px solid var(--border); border-radius: var(--r-md); }
+    .cond-num { width: 26px; height: 26px; flex-shrink: 0; background: rgba(245,158,11,0.15); border: 1px solid rgba(245,158,11,0.3); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: var(--warning); }
+    .cond-text { font-size: 14px; line-height: 1.6; padding-top: 3px; color: var(--text2); }
+
+    /* ═══ INFO TABLE ═══ */
+    .info-table { border: 1px solid var(--border); border-radius: var(--r-lg); overflow: hidden; }
+    .info-row { display: flex; align-items: center; padding: 13px 16px; border-bottom: 1px solid var(--border); }
+    .info-row:last-child { border-bottom: none; }
+    .info-row:nth-child(even) { background: var(--bg3); }
+    .info-key { font-size: 13px; color: var(--text3); width: 140px; flex-shrink: 0; }
+    .info-val { font-size: 14px; font-weight: 600; flex: 1; }
+
+    /* ═══ REVIEWS ═══ */
+    .review-score-wrap { display: flex; gap: 24px; align-items: flex-start; margin-bottom: 20px; padding: 20px; background: var(--bg3); border: 1px solid var(--border); border-radius: var(--r-lg); }
+    .review-big-num { font-size: 56px; font-weight: 900; color: var(--warning); line-height: 1; }
+    .review-big-stars { font-size: 18px; color: var(--warning); margin: 4px 0; }
+    .review-big-count { font-size: 12px; color: var(--text3); }
+    .bars-wrap { flex: 1; display: flex; flex-direction: column; gap: 5px; }
+    .bar-row { display: flex; align-items: center; gap: 8px; }
+    .bar-label { font-size: 12px; color: var(--text2); width: 16px; text-align: center; }
+    .bar-track { flex: 1; height: 8px; background: var(--bg4); border-radius: 4px; overflow: hidden; }
+    .bar-fill { height: 100%; background: var(--warning); border-radius: 4px; transition: width 0.8s ease; }
+    .bar-count { font-size: 11px; color: var(--text3); width: 32px; text-align: left; }
+
+    .reviews-list { display: flex; flex-direction: column; gap: 12px; }
+    .review-card { background: var(--bg3); border: 1px solid var(--border); border-radius: var(--r-md); padding: 14px 16px; }
+    .review-header { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+    .review-avatar { width: 36px; height: 36px; border-radius: 50%; background: var(--accent-soft); border: 1px solid var(--accent-glow); display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; color: var(--accent); flex-shrink: 0; }
+    .review-author { flex: 1; }
+    .review-name { font-size: 14px; font-weight: 700; }
+    .review-date { font-size: 11px; color: var(--text3); margin-top: 1px; }
+    .review-stars { font-size: 14px; color: var(--warning); }
+    .review-text { font-size: 14px; color: var(--text2); line-height: 1.7; }
+
+    /* ═══ SIMILAR APPS ═══ */
+    .similar-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 12px; }
+    .similar-card { background: var(--bg3); border: 1px solid var(--border); border-radius: var(--r-md); padding: 14px 10px; text-align: center; cursor: pointer; transition: all var(--tr); text-decoration: none; display: block; }
+    .similar-card:hover { background: var(--bg4); border-color: var(--border2); transform: translateY(-2px); }
+    .similar-icon { width: 56px; height: 56px; border-radius: 14px; margin: 0 auto 8px; background: var(--accent-soft); overflow: hidden; display: flex; align-items: center; justify-content: center; font-size: 24px; border: 1px solid var(--border); }
+    .similar-icon img { width: 100%; height: 100%; object-fit: cover; }
+    .similar-name { font-size: 12px; font-weight: 700; margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .similar-dev { font-size: 11px; color: var(--text3); margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .similar-rating { font-size: 12px; color: var(--warning); }
+
+    /* ═══ CONDITIONS MODAL ═══ */
+    #cond-modal { position: fixed; inset: 0; z-index: 200; background: rgba(0,0,0,0.75); backdrop-filter: blur(8px); display: none; align-items: flex-end; }
+    #cond-modal.open { display: flex; }
+    .cond-sheet { width: 100%; max-width: var(--max); margin: 0 auto; background: var(--bg2); border-radius: var(--r-xl) var(--r-xl) 0 0; padding: 0 0 32px; animation: up 0.3s cubic-bezier(0.32,0.72,0,1); }
+    .cond-sheet-handle { width: 36px; height: 4px; background: var(--border2); border-radius: 2px; margin: 12px auto; }
+    .cond-sheet-head { display: flex; align-items: center; justify-content: space-between; padding: 8px 20px 16px; border-bottom: 1px solid var(--border); }
+    .cond-sheet-title { font-size: 17px; font-weight: 800; }
+    .cond-sheet-sub { font-size: 13px; color: var(--text3); margin-top: 3px; }
+    .cond-sheet-body { padding: 16px 20px; max-height: 45dvh; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; }
+    .cond-agree-row { margin: 4px 20px 0; padding: 14px; background: var(--bg3); border: 1px solid var(--border); border-radius: var(--r-md); display: flex; align-items: flex-start; gap: 12px; cursor: pointer; }
+    .cond-agree-row input { width: 20px; height: 20px; flex-shrink: 0; accent-color: var(--accent); cursor: pointer; margin-top: 1px; }
+    .cond-agree-label { font-size: 13px; color: var(--text2); line-height: 1.6; cursor: pointer; }
+    .cond-footer { padding: 16px 20px 0; }
+    .cond-proceed { width: 100%; height: 52px; background: var(--accent); color: #fff; border: none; border-radius: var(--r-md); font-family: var(--font); font-size: 16px; font-weight: 700; cursor: pointer; opacity: 0.4; transition: all var(--tr); }
+    .cond-proceed.on { opacity: 1; } .cond-proceed.on:hover { background: var(--accent-h); }
+
+    /* ═══ LIGHTBOX ═══ */
+    #lightbox { position: fixed; inset: 0; z-index: 300; background: rgba(0,0,0,0.92); backdrop-filter: blur(12px); display: none; align-items: center; justify-content: center; padding: 20px; }
+    #lightbox.open { display: flex; }
+    #lightbox img { max-width: 100%; max-height: 90dvh; border-radius: var(--r-md); object-fit: contain; }
+    #lightbox-close { position: absolute; top: 20px; right: 20px; width: 40px; height: 40px; background: rgba(255,255,255,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 20px; color: #fff; }
+
+    /* ═══ TOAST ═══ */
+    .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(16px); background: var(--bg3); border: 1px solid var(--border2); border-radius: var(--r-md); padding: 12px 20px; font-size: 14px; font-weight: 600; z-index: 400; opacity: 0; transition: all 0.3s; white-space: nowrap; }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    /* ═══ SKELETON ═══ */
+    .skeleton { background: linear-gradient(90deg, var(--bg3) 25%, var(--bg4) 50%, var(--bg3) 75%); background-size: 200% 100%; animation: shimmer 1.4s infinite; border-radius: var(--r-sm); }
+    @keyframes shimmer { to { background-position: -200% 0; } }
+    @keyframes up { from { transform: translateY(100%); } to { transform: translateY(0); } }
+
+    /* ═══ NOT FOUND ═══ */
+    .not-found { text-align: center; padding: 80px 20px; }
+    .not-found-icon { font-size: 72px; margin-bottom: 20px; }
+    .not-found-title { font-size: 24px; font-weight: 800; margin-bottom: 8px; }
+    .not-found-sub { font-size: 15px; color: var(--text2); margin-bottom: 24px; }
+    .btn-home { display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; background: var(--accent); color: #fff; border-radius: var(--r-md); font-size: 15px; font-weight: 700; transition: background var(--tr); }
+    .btn-home:hover { background: var(--accent-h); }
+
+    @media (max-width: 600px) {
+      .hero { flex-direction: column; gap: 14px; }
+      .hero-icon { width: 80px; height: 80px; border-radius: 18px; font-size: 32px; }
+      .hero-name { font-size: 22px; }
+      .stats-grid { grid-template-columns: repeat(2,1fr); }
+      .review-score-wrap { flex-direction: column; gap: 14px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header id="site-header">
+  <a href="index.html" class="header-logo" aria-label="فولت تك الرئيسية">
+    <div class="logo-bolt">⚡</div>
+    <div class="logo-name"><span>Volt</span> Tech</div>
+  </a>
+  <a href="index.html" class="header-back">
+    <span>←</span> الرئيسية
+  </a>
+</header>
+
+<!-- BREADCRUMB -->
+<nav class="breadcrumb" aria-label="مسار التنقل" id="breadcrumb-nav">
+  <a href="index.html">فولت تك</a>
+  <span class="breadcrumb-sep">›</span>
+  <span id="bc-cat"></span>
+  <span class="breadcrumb-sep" id="bc-sep2">›</span>
+  <span id="bc-name" style="color:var(--text1)"></span>
+</nav>
+
+<!-- MAIN -->
+<main class="page-wrap" id="main-content">
+
+  <!-- skeleton while loading -->
+  <div id="loading-state">
+    <div class="hero" style="padding:20px 0 24px">
+      <div class="skeleton" style="width:96px;height:96px;border-radius:22px;flex-shrink:0"></div>
+      <div style="flex:1">
+        <div class="skeleton" style="height:28px;width:60%;margin-bottom:10px"></div>
+        <div class="skeleton" style="height:16px;width:35%;margin-bottom:14px"></div>
+        <div class="skeleton" style="height:52px;width:180px"></div>
+      </div>
+    </div>
+    <div class="skeleton" style="height:100px;border-radius:var(--r-lg);margin-bottom:28px"></div>
+    <div class="skeleton" style="height:160px;border-radius:var(--r-lg)"></div>
+  </div>
+
+  <!-- real content (hidden until loaded) -->
+  <div id="app-content" style="display:none">
+
+    <!-- HERO -->
+    <div class="hero">
+      <div class="hero-icon-wrap">
+        <div class="hero-icon" id="app-icon">📱</div>
+        <div class="hero-badge-wrap" id="badge-wrap" style="display:none">🆕</div>
+      </div>
+      <div class="hero-info">
+        <h1 class="hero-name" id="app-name">اسم التطبيق</h1>
+        <div class="hero-dev"><a href="#" class="hero-dev-link" id="app-dev">المطور</a></div>
+        <div class="hero-tags" id="app-tags"></div>
+        <div class="rating-row" id="rating-row">
+          <div class="rating-big">
+            <div class="rating-num" id="r-num">-</div>
+            <div class="rating-stars" id="r-stars"></div>
+            <div class="rating-count" id="r-count"></div>
+          </div>
+          <div class="rating-divider"></div>
+          <div class="rating-stat"><div class="rating-stat-val" id="r-installs">-</div><div class="rating-stat-lbl">تنزيل</div></div>
+          <div class="rating-divider"></div>
+          <div class="rating-stat"><div class="rating-stat-val" id="r-size">-</div><div class="rating-stat-lbl">الحجم</div></div>
+        </div>
+        <div class="dl-section">
+          <button class="btn-download" id="btn-dl" onclick="triggerDownload()">
+            <span>⬇️</span> تنزيل مجاناً
+          </button>
+          <button class="btn-fav" id="btn-fav" onclick="toggleFav()" title="إضافة للمفضلة">🤍</button>
+          <button class="btn-share" onclick="doShare()" title="مشاركة">🔗</button>
+        </div>
+        <div class="dl-note" id="dl-note">مجاني · بدون إعلانات إجبارية</div>
+      </div>
+    </div>
+
+    <!-- HEADER IMAGE -->
+    <div class="header-img-wrap" id="header-img-wrap" style="display:none">
+      <img id="header-img" src="" alt=""/>
+    </div>
+
+    <!-- STATS GRID -->
+    <div class="stats-grid" id="stats-grid">
+      <div class="stat-cell"><div class="stat-val warning" id="s-rating">-</div><div class="stat-lbl">⭐ التقييم</div></div>
+      <div class="stat-cell"><div class="stat-val accent"  id="s-installs">-</div><div class="stat-lbl">📥 التنزيلات</div></div>
+      <div class="stat-cell"><div class="stat-val"         id="s-size">-</div><div class="stat-lbl">📦 الحجم</div></div>
+      <div class="stat-cell"><div class="stat-val success" id="s-free">مجاني</div><div class="stat-lbl">💰 السعر</div></div>
+    </div>
+
+    <!-- SCREENSHOTS -->
+    <section class="section" id="sec-screenshots" style="display:none">
+      <h2 class="section-title">📸 لقطات الشاشة</h2>
+      <div class="screenshots-track" id="screenshots-list"></div>
+    </section>
+
+    <!-- DESCRIPTION -->
+    <section class="section" id="sec-desc">
+      <h2 class="section-title">📖 عن التطبيق</h2>
+      <div class="desc-text collapsed" id="desc-text"></div>
+      <span class="read-more-btn" id="read-more-btn" onclick="expandDesc()">قراءة المزيد ▾</span>
+    </section>
+
+    <!-- CONDITIONS -->
+    <section class="section" id="sec-conds" style="display:none">
+      <h2 class="section-title">⚠️ شروط التشغيل</h2>
+      <div class="cond-list" id="conds-preview"></div>
+    </section>
+
+    <!-- APP INFO TABLE -->
+    <section class="section" id="sec-info">
+      <h2 class="section-title">ℹ️ معلومات التطبيق</h2>
+      <div class="info-table" id="info-table"></div>
+    </section>
+
+    <!-- REVIEWS -->
+    <section class="section" id="sec-reviews" style="display:none">
+      <h2 class="section-title">⭐ تقييمات المستخدمين</h2>
+      <div class="review-score-wrap" id="review-score"></div>
+      <div class="reviews-list" id="reviews-list"></div>
+    </section>
+
+    <!-- SIMILAR APPS -->
+    <section class="section" id="sec-similar" style="display:none">
+      <h2 class="section-title">🔍 تطبيقات مشابهة</h2>
+      <div class="similar-grid" id="similar-grid"></div>
+    </section>
+
+  </div>
+
+  <!-- NOT FOUND -->
+  <div id="not-found-state" style="display:none">
+    <div class="not-found">
+      <div class="not-found-icon">🔍</div>
+      <div class="not-found-title">التطبيق غير موجود</div>
+      <div class="not-found-sub">ربما تم حذف التطبيق أو تغيير رابطه</div>
+      <a href="index.html" class="btn-home">← العودة للمتجر</a>
+    </div>
+  </div>
+
+</main>
+
+<!-- CONDITIONS MODAL -->
+<div id="cond-modal">
+  <div class="cond-sheet">
+    <div class="cond-sheet-handle"></div>
+    <div class="cond-sheet-head">
+      <div>
+        <div class="cond-sheet-title" id="cond-app-title">شروط التشغيل</div>
+        <div class="cond-sheet-sub">يرجى القراءة والموافقة قبل التنزيل</div>
+      </div>
+      <button onclick="closeCond()" style="background:none;border:none;color:var(--text2);font-size:22px;cursor:pointer">✕</button>
+    </div>
+    <div class="cond-sheet-body" id="cond-body"></div>
+    <div class="cond-agree-row" onclick="toggleAgree()">
+      <input type="checkbox" id="agree-cb" onchange="updateProceed()"/>
+      <label class="cond-agree-label" for="agree-cb">أقر بأنني قرأت شروط التشغيل وأوافق عليها كاملاً، وأتحمل مسؤولية تشغيل التطبيق وفقاً لهذه الشروط.</label>
+    </div>
+    <div class="cond-footer">
+      <button class="cond-proceed" id="cond-proceed" disabled onclick="doDownload()">المتابعة والتنزيل ⬇️</button>
+    </div>
+  </div>
+</div>
+
+<!-- LIGHTBOX -->
+<div id="lightbox" onclick="closeLightbox()">
+  <div id="lightbox-close" onclick="closeLightbox()">✕</div>
+  <img id="lightbox-img" src="" alt="لقطة شاشة"/>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script type="module">
+import { initializeApp }   from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+import {
+  getFirestore, collection, getDocs, doc,
+  getDoc, query, where, orderBy, limit,
+  addDoc, updateDoc, increment, serverTimestamp, setDoc
+} from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+
+/* ═══ CONFIG — نفس مشروع Firebase ═══ */
+const firebaseConfig = {
+  apiKey:            "AIzaSyDqiO6lxMfbsBGbTln1TwDnZP5VpKrbYIw",
+  authDomain:        "volt-tech-814a5.firebaseapp.com",
+  projectId:         "volt-tech-814a5",
+  storageBucket:     "volt-tech-814a5.firebasestorage.app",
+  messagingSenderId: "99527787970",
+  appId:             "1:99527787970:web:86dddbaf4aaf739536025b"
+};
+const fbApp = initializeApp(firebaseConfig);
+const db    = getFirestore(fbApp);
+
+/* ═══ STATE ═══ */
+let APP      = null;
+let ALL_APPS = [];
+let dlUrl    = null;
+let favs     = JSON.parse(localStorage.getItem('vt-favs') || '[]');
+
+/* ═══ EXTRACT SLUG FROM URL ═══
+   Supports: /app/com-whatsapp  OR  /app/com.whatsapp  OR ?app=com.whatsapp
+*/
+function getSlugFromUrl() {
+  const path  = location.pathname; // e.g. /app/com-whatsapp
+  const match = path.match(/\/app\/(.+)/);
+  if (match) return match[1];
+  return new URLSearchParams(location.search).get('app') || '';
+}
+
+/* ═══ LOAD APP DATA ═══ */
+async function loadApp() {
+  const rawSlug = getSlugFromUrl();
+  if (!rawSlug) { showNotFound(); return; }
+
+  try {
+    /* 1 — try seoSlug field */
+    let snap = await getDocs(query(collection(db,'apps'), where('seoSlug','==', rawSlug), limit(1)));
+
+    /* 2 — try packageId field (slug = id with dots → dashes) */
+    if (snap.empty) {
+      const pkgCandidate = rawSlug.replace(/-/g, '.');
+      snap = await getDocs(query(collection(db,'apps'), where('packageId','==', pkgCandidate), limit(1)));
+    }
+
+    /* 3 — try document ID directly */
+    if (snap.empty) {
+      const directDoc = await getDoc(doc(db, 'apps', rawSlug));
+      if (directDoc.exists()) {
+        APP = { id: directDoc.id, ...directDoc.data() };
+      }
+    } else {
+      APP = { id: snap.docs[0].id, ...snap.docs[0].data() };
+    }
+
+    /* 4 — load all for similar apps */
+    const allSnap = await getDocs(query(collection(db,'apps'), orderBy('downloads','desc'), limit(50)));
+    ALL_APPS = allSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+
+    /* 5 — fallback: check demo data */
+    if (!APP) {
+      const demo = getDemoApps();
+      APP = demo.find(a =>
+        (a.seoSlug === rawSlug) ||
+        ((a.packageId||'').replace(/\./g,'-') === rawSlug) ||
+        (a.id === rawSlug)
+      );
+      ALL_APPS = demo;
+    }
+
+  } catch(e) {
+    /* offline fallback */
+    const demo = getDemoApps();
+    APP = demo[0];
+    ALL_APPS = demo;
+  }
+
+  if (!APP) { showNotFound(); return; }
+  renderApp();
+}
+
+/* ═══ RENDER ═══ */
+function renderApp() {
+  const a = APP;
+  dlUrl = a.directUrl || a.downloadUrl || null;
+
+  /* ── SEO meta ── */
+  const seoTitle = a.seoTitle || `تنزيل ${a.name} — ${a.developer} | فولت تك`;
+  const seoDesc  = a.seoDescription || `حمّل ${a.name} بواسطة ${a.developer} مجاناً على أندرويد. ${(a.description||'').slice(0,120)} تنزيل مباشر بدون جوجل بلاي.`;
+  const slug     = a.seoSlug || (a.packageId||a.id||'').replace(/\./g,'-');
+  // استخدم مسار /app/slug إذا كانت hosting تدعمه، وإلا استخدم ?app=slug
+  const hasCleanUrls = !location.pathname.endsWith('.html') && !location.search.includes('app=');
+  const pageUrl  = hasCleanUrls
+    ? `${location.origin}/app/${slug}`
+    : `${location.origin}/app-page.html?app=${encodeURIComponent(slug)}`;
+
+  setMeta('meta-title',    seoTitle);
+  setMeta('meta-desc',     seoDesc,     'content');
+  setMeta('meta-keywords', `${a.name}, ${a.developer}, تنزيل ${a.name}, ${a.name} أندرويد, ${a.category||''}`, 'content');
+  setMeta('meta-canonical', pageUrl, 'href');
+  setMeta('og-title',      seoTitle);
+  setMeta('og-desc',       seoDesc);
+  setMeta('og-image',      a.headerImage || a.icon || '');
+  setMeta('og-url',        pageUrl);
+  setMeta('tw-title',      seoTitle);
+  setMeta('tw-desc',       seoDesc);
+  setMeta('tw-image',      a.headerImage || a.icon || '');
+
+  /* JSON-LD SoftwareApplication */
+  document.getElementById('jsonld-app').textContent = JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": a.name,
+    "description": a.description || '',
+    "url": pageUrl,
+    "image": a.icon || '',
+    "screenshot": (a.screenshots||[]).map(s => ({ "@type": "ImageObject", "url": s })),
+    "operatingSystem": "Android " + (a.androidVersion || '5.0') + "+",
+    "applicationCategory": catSchema(a.category),
+    "author": { "@type": "Organization", "name": a.developer },
+    "publisher": { "@type": "Organization", "name": "فولت تك", "url": location.origin },
+    "aggregateRating": a.rating ? {
+      "@type": "AggregateRating",
+      "ratingValue": String(a.rating),
+      "ratingCount": String(a.ratingCount || a.reviews || 5000),
+      "bestRating": "5", "worstRating": "1"
+    } : undefined,
+    "offers": {
+      "@type": "Offer",
+      "price": String(a.price || 0),
+      "priceCurrency": "USD",
+      "availability": "https://schema.org/InStock"
+    },
+    "softwareVersion": a.version || "",
+    "fileSize": a.size || "",
+    "datePublished": a.releaseDate || "",
+    "downloadUrl": pageUrl,
+    "contentRating": a.contentRating || "Everyone",
+    "inLanguage": "ar"
+  });
+
+  /* Breadcrumb JSON-LD */
+  document.getElementById('jsonld-breadcrumb').textContent = JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type":"ListItem","position":1,"name":"فولت تك","item": location.origin },
+      { "@type":"ListItem","position":2,"name": catAr(a.category),"item": `${location.origin}/?cat=${a.category}` },
+      { "@type":"ListItem","position":3,"name": a.name,"item": pageUrl }
+    ]
+  });
+
+  /* ── Breadcrumb UI ── */
+  setText('bc-cat', catAr(a.category));
+  setText('bc-name', a.name);
+
+  /* ── Hero ── */
+  document.getElementById('app-icon').innerHTML = iconHtml(a);
+  setText('app-name', a.name);
+  const devEl = document.getElementById('app-dev');
+  devEl.textContent = a.developer;
+  devEl.href = `/?dev=${encodeURIComponent(a.developer)}`;
+
+  /* Tags */
+  const tags = [];
+  tags.push(`<span class="hero-tag">${catAr(a.category)}</span>`);
+  if (a.badge === 'hot') tags.push('<span class="hero-tag hot">🔥 رائج</span>');
+  if (a.badge === 'new') tags.push('<span class="hero-tag new">🆕 جديد</span>');
+  if (a.free !== false)  tags.push('<span class="hero-tag free">✅ مجاني</span>');
+  if (a.adSupported)     tags.push('<span class="hero-tag">📢 إعلانات</span>');
+  if (a.inAppPurchases)  tags.push('<span class="hero-tag">🛒 مشتريات</span>');
+  document.getElementById('app-tags').innerHTML = tags.join('');
+
+  /* Badge icon */
+  if (a.badge) {
+    const bw = document.getElementById('badge-wrap');
+    bw.style.display = 'flex';
+    bw.textContent = a.badge === 'hot' ? '🔥' : '🆕';
+  }
+
+  /* Rating row */
+  const r = a.rating || 0;
+  setText('r-num', r ? r.toFixed(1) : '-');
+  document.getElementById('r-stars').textContent = r ? starsStr(r) : '';
+  setText('r-count', a.ratingCount ? `${(a.ratingCount/1000).toFixed(0)}K تقييم` : (a.reviews ? `${a.reviews.toLocaleString()} تقييم` : ''));
+  // عداد التنزيلات على المنصة (حقيقي) + من Google Play
+  const platformDL = a.downloads || 0;
+  const playInstalls = a.installs || '';
+  const installsDisplay = platformDL > 0
+    ? platformDL.toLocaleString('ar-EG') + ' تنزيل'
+    : (playInstalls || '-');
+  setText('r-installs', installsDisplay);
+  setText('r-size', a.size || '-');
+
+  /* Stats grid */
+  setText('s-rating',   r ? r.toFixed(1) : '-');
+  const platDL2 = a.downloads || 0;
+  setText('s-installs', platDL2 > 0 ? platDL2.toLocaleString('ar-EG') + ' تنزيل' : (a.installs || '-'));
+  setText('s-size',     a.size || '-');
+  setText('s-free',     a.free === false ? (a.price ? `$${a.price}` : 'مدفوع') : 'مجاني');
+
+  /* Download note */
+  const notes = [];
+  if (a.free !== false) notes.push('مجاني');
+  if (a.size)           notes.push(`الحجم: ${a.size}`);
+  if (a.androidVersion) notes.push(`أندرويد ${a.androidVersion}+`);
+  setText('dl-note', notes.join(' · ') || 'تنزيل مباشر');
+
+  /* ── Header Image ── */
+  if (a.headerImage) {
+    document.getElementById('header-img').src = a.headerImage;
+    document.getElementById('header-img').alt = `صورة ${a.name}`;
+    document.getElementById('header-img-wrap').style.display = 'block';
+  }
+
+  /* ── Screenshots ── */
+  if (a.screenshots?.length) {
+    document.getElementById('sec-screenshots').style.display = 'block';
+    document.getElementById('screenshots-list').innerHTML = a.screenshots.map((s,i) =>
+      `<img class="screenshot" src="${s}" alt="لقطة شاشة ${a.name} ${i+1}" loading="lazy" onclick="openLightbox('${s}')"/>`
+    ).join('');
+  }
+
+  /* ── Description ── */
+  document.getElementById('desc-text').textContent = a.description || 'لا يوجد وصف متاح لهذا التطبيق.';
+  if ((a.description||'').length < 200) {
+    document.getElementById('desc-text').classList.remove('collapsed');
+    document.getElementById('read-more-btn').style.display = 'none';
+  }
+
+  /* ── Conditions ── */
+  const conds = normConds(a.conditions);
+  if (conds.length) {
+    document.getElementById('sec-conds').style.display = 'block';
+    document.getElementById('conds-preview').innerHTML = conds.map((c,i) => `
+      <div class="cond-item">
+        <div class="cond-num">${i+1}</div>
+        <div class="cond-text">${c}</div>
+      </div>`).join('');
+  }
+
+  /* ── Info Table ── */
+  const infoRows = [];
+  if (a.version)        infoRows.push(['الإصدار',          a.version]);
+  if (a.androidVersion) infoRows.push(['أندرويد مطلوب',    a.androidVersion + '+']);
+  if (a.size)           infoRows.push(['الحجم',             a.size]);
+  if (a.installs)       infoRows.push(['عدد التنزيلات',     a.installs]);
+  if (a.contentRating)  infoRows.push(['التصنيف العمري',    a.contentRating]);
+  if (a.releaseDate)    infoRows.push(['تاريخ الإصدار',     a.releaseDate]);
+  if (a.lastUpdated)    infoRows.push(['آخر تحديث',         fmtDate(a.lastUpdated)]);
+  if (a.packageId)      infoRows.push(['معرّف التطبيق',     a.packageId]);
+  infoRows.push(['الفئة', catAr(a.category)]);
+  infoRows.push(['المطور', a.developer]);
+  infoRows.push(['المنصة', 'Android']);
+  if (a.adSupported !== undefined) infoRows.push(['إعلانات', a.adSupported ? 'نعم' : 'لا']);
+  if (a.inAppPurchases !== undefined) infoRows.push(['مشتريات داخلية', a.inAppPurchases ? 'نعم' : 'لا']);
+
+  document.getElementById('info-table').innerHTML = infoRows.map(([k,v]) =>
+    `<div class="info-row"><span class="info-key">${k}</span><span class="info-val">${v}</span></div>`
+  ).join('');
+
+  /* ── Reviews ── */
+  const reviews = a.topReviews || [];
+  if (reviews.length && a.rating) {
+    document.getElementById('sec-reviews').style.display = 'block';
+    const totalR = reviews.length;
+    const dist = [5,4,3,2,1].map(n => ({
+      star: n,
+      pct: reviews.filter(r => Math.round(r.rating||5) === n).length / (totalR||1) * 100
+    }));
+    document.getElementById('review-score').innerHTML = `
+      <div>
+        <div class="review-big-num">${(a.rating).toFixed(1)}</div>
+        <div class="review-big-stars">${starsStr(a.rating)}</div>
+        <div class="review-big-count">${(a.ratingCount||a.reviews||0).toLocaleString()} تقييم</div>
+      </div>
+      <div class="bars-wrap">
+        ${dist.map(d => `
+          <div class="bar-row">
+            <span class="bar-label">${d.star}</span>
+            <div class="bar-track"><div class="bar-fill" style="width:${d.pct}%"></div></div>
+            <span class="bar-count">${Math.round(d.pct)}%</span>
+          </div>`).join('')}
+      </div>`;
+    document.getElementById('reviews-list').innerHTML = reviews.slice(0,5).map(r => `
+      <div class="review-card">
+        <div class="review-header">
+          <div class="review-avatar">${(r.author||'م')[0].toUpperCase()}</div>
+          <div class="review-author">
+            <div class="review-name">${r.author || 'مستخدم'}</div>
+            ${r.date ? `<div class="review-date">${r.date}</div>` : ''}
+          </div>
+          <div class="review-stars">${starsStr(r.rating||5)}</div>
+        </div>
+        <div class="review-text">${r.text || ''}</div>
+      </div>`).join('');
+  }
+
+  /* ── Similar Apps ── */
+  const similar = ALL_APPS.filter(x =>
+    x.id !== a.id && x.category === a.category
+  ).slice(0, 8);
+  if (similar.length) {
+    document.getElementById('sec-similar').style.display = 'block';
+    document.getElementById('similar-grid').innerHTML = similar.map(x => {
+      const xSlug = x.seoSlug || (x.packageId||x.id||'').replace(/\./g,'-');
+      return `
+        <a href="app-page.html?app=${encodeURIComponent(xSlug)}" class="similar-card">
+          <div class="similar-icon">${iconHtml(x)}</div>
+          <div class="similar-name">${x.name}</div>
+          <div class="similar-dev">${x.developer}</div>
+          <div class="similar-rating">⭐ ${x.rating||'-'}</div>
+        </a>`;
+    }).join('');
+  }
+
+  /* ── Fav button ── */
+  updateFavBtn();
+
+  /* ── Show content ── */
+  document.getElementById('loading-state').style.display  = 'none';
+  document.getElementById('app-content').style.display    = 'block';
+
+  /* Track view */
+  try { setDoc(doc(db,'pageViews',a.id), { appId:a.id, count: increment(1), lastViewed: serverTimestamp() }, { merge:true }); } catch(e){}
+}
+
+/* ═══ DOWNLOAD FLOW ═══ */
+window.triggerDownload = function() {
+  if (!APP) return;
+  const conds = normConds(APP.conditions);
+  if (!conds.length) { doDownload(); return; }
+  openCond();
+};
+
+function openCond() {
+  const a = APP;
+  const conds = normConds(a.conditions);
+  document.getElementById('cond-app-title').textContent = `${a.name} — شروط التشغيل`;
+  document.getElementById('cond-body').innerHTML = conds.map((c,i) => `
+    <div class="cond-item">
+      <div class="cond-num">${i+1}</div>
+      <div class="cond-text">${c}</div>
+    </div>`).join('');
+  document.getElementById('agree-cb').checked = false;
+  const btn = document.getElementById('cond-proceed');
+  btn.disabled = true; btn.classList.remove('on');
+  document.getElementById('cond-modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+window.closeCond = function() {
+  document.getElementById('cond-modal').classList.remove('open');
+  document.body.style.overflow = '';
+};
+window.toggleAgree = function() {
+  const cb = document.getElementById('agree-cb');
+  cb.checked = !cb.checked;
+  updateProceed();
+};
+window.updateProceed = function() {
+  const agreed = document.getElementById('agree-cb').checked;
+  const btn = document.getElementById('cond-proceed');
+  btn.disabled = !agreed;
+  btn.classList.toggle('on', agreed);
+};
+window.doDownload = function() {
+  closeCond();
+  if (dlUrl && dlUrl !== '#') {
+    // إجبار التنزيل الفعلي للملف بدل فتح رابط في تبويب جديد
+    const a = document.createElement('a');
+    a.href = dlUrl;
+    a.download = (APP?.name || 'app').replace(/[^\w\u0600-\u06FF\- ]/g, '') || 'app';
+    a.rel = 'noopener';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    showToast('⬇️ جارٍ تنزيل التطبيق...');
+  } else {
+    showToast('❌ لا يوجد رابط تنزيل متاح');
+  }
+  trackDownload();
+};
+
+async function trackDownload() {
+  if (!APP) return;
+  try {
+    await updateDoc(doc(db,'apps',APP.id), { downloads: increment(1) });
+    await addDoc(collection(db,'downloadLogs'), {
+      appId:APP.id, appName:APP.name,
+      timestamp:serverTimestamp(), userId:'anon', platform:'web'
+    });
+  } catch(e){}
+}
+
+/* ═══ SHARE ═══ */
+window.doShare = function() {
+  const url   = location.href;
+  const title = APP?.name || 'فولت تك';
+  const text  = `${title} — ${(APP?.description||'').slice(0,80)}`;
+  if (navigator.share) {
+    navigator.share({ title, text, url }).catch(()=>{});
+  } else {
+    navigator.clipboard.writeText(url).then(() => showToast('✅ تم نسخ الرابط'));
+  }
+};
+
+/* ═══ FAVORITES ═══ */
+window.toggleFav = function() {
+  if (!APP) return;
+  const id  = APP.id;
+  const idx = favs.indexOf(id);
+  if (idx === -1) { favs.push(id); showToast('❤️ تمت الإضافة للمفضلة'); }
+  else            { favs.splice(idx,1); showToast('💔 تمت الإزالة من المفضلة'); }
+  localStorage.setItem('vt-favs', JSON.stringify(favs));
+  updateFavBtn();
+};
+function updateFavBtn() {
+  const btn = document.getElementById('btn-fav');
+  const isFav = favs.includes(APP?.id);
+  btn.textContent = isFav ? '❤️' : '🤍';
+  btn.classList.toggle('active', isFav);
+  btn.title = isFav ? 'إزالة من المفضلة' : 'إضافة للمفضلة';
+}
+
+/* ═══ DESCRIPTION EXPAND ═══ */
+window.expandDesc = function() {
+  document.getElementById('desc-text').classList.remove('collapsed');
+  document.getElementById('read-more-btn').style.display = 'none';
+};
+
+/* ═══ LIGHTBOX ═══ */
+window.openLightbox = function(src) {
+  document.getElementById('lightbox-img').src = src;
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow = 'hidden';
+};
+window.closeLightbox = function() {
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow = '';
+};
+
+/* ═══ NOT FOUND ═══ */
+function showNotFound() {
+  document.getElementById('loading-state').style.display  = 'none';
+  document.getElementById('not-found-state').style.display = 'block';
+  document.title = 'التطبيق غير موجود | فولت تك';
+}
+
+/* ═══ TOAST ═══ */
+let toastT;
+window.showToast = function(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastT);
+  toastT = setTimeout(() => t.classList.remove('show'), 3000);
+};
+
+/* ═══ HELPERS ═══ */
+function setText(id, val) {
+  const el = document.getElementById(id);
+  if (el) el.textContent = val;
+}
+function setMeta(id, val, attr='content') {
+  const el = document.getElementById(id);
+  if (!el) return;
+  if (el.tagName === 'TITLE') {
+    el.textContent = val;
+    document.title = val;
+  } else if (attr === 'href') {
+    el.setAttribute('href', val);
+  } else {
+    el.setAttribute('content', val);
+  }
+}
+function iconHtml(a) {
+  if (a.icon?.startsWith('http')) return `<img src="${a.icon}" alt="${a.name}" loading="lazy" onerror="this.parentElement.textContent='📱'"/>`;
+  return a.icon || '📱';
+}
+function starsStr(r) {
+  r = Number(r) || 0;
+  if (r < 0) r = 0;
+  if (r > 5) r = 5;
+  const full  = Math.floor(r);
+  const half  = r - full >= 0.5 ? 1 : 0;
+  const empty = Math.max(0, 5 - full - half);
+  return '★'.repeat(full) + (half ? '½' : '') + '☆'.repeat(empty);
+}
+function catAr(cat) {
+  const m = { games:'ألعاب', social:'تواصل اجتماعي', tools:'أدوات', education:'تعليم', health:'صحة ولياقة', finance:'مالية' };
+  return m[cat] || cat || 'عام';
+}
+function catSchema(cat) {
+  const m = { games:'GameApplication', social:'SocialNetworkingApplication', tools:'UtilitiesApplication', education:'EducationalApplication', health:'HealthApplication', finance:'FinanceApplication' };
+  return m[cat] || 'MobileApplication';
+}
+function normConds(c) {
+  if (!c) return [];
+  if (Array.isArray(c)) return c.filter(Boolean);
+  if (typeof c === 'string') return c.split('\n').map(s=>s.trim()).filter(Boolean);
+  return [];
+}
+function fmtDate(ts) {
+  if (!ts) return '';
+  const d = ts?.toDate ? ts.toDate() : new Date(ts);
+  return d.toLocaleDateString('ar-EG', { year:'numeric', month:'long', day:'numeric' });
+}
+
+function getDemoApps() {
+  return [
+    { id:'com.whatsapp', name:'واتساب', developer:'Meta Platforms', category:'social', packageId:'com.whatsapp', seoSlug:'whatsapp', icon:'https://play-lh.googleusercontent.com/bYtqbOcTYOlgc6gqZ2rwb8lptHuwlNE75zYJu6Bn076-hTmvd96HH-6v7S0YUAAJXoJN', rating:4.3, size:'55 MB', installs:'5B+', version:'2.24.1', androidVersion:'5.0', contentRating:'Everyone', description:'واتساب هو تطبيق المراسلة الأشهر في العالم. أرسل رسائل نصية ومكالمات صوتية ومرئية مجانية لأصدقائك وعائلتك في أي مكان وفي أي وقت. يمكنك أيضاً إرسال صور ومقاطع فيديو وملفات صوتية ومستندات بأي حجم. واتساب آمن بالكامل بتشفير تام بين الطرفين.', conditions:['يتطلب اتصال إنترنت مستمر','يحتاج إذن الوصول للكاميرا والميكروفون','متوافق مع أندرويد 5.0 فما فوق','تأكد من صحة رقم هاتفك'], directUrl:'https://play.google.com/store/apps/details?id=com.whatsapp', downloads:1200, badge:'hot', featured:true, ratingCount:75000000, adSupported:false, inAppPurchases:false, topReviews:[{author:'أحمد محمد',rating:5,text:'تطبيق رائع ولا يمكن الاستغناء عنه. سريع وموثوق ومجاني تماماً.',date:'مارس 2024'},{author:'سارة علي',rating:4,text:'ممتاز لكن أتمنى لو في خاصية إخفاء آخر ظهور بشكل كامل.',date:'فبراير 2024'}] },
+    { id:'com.google.android.youtube', name:'يوتيوب', developer:'Google LLC', category:'social', packageId:'com.google.android.youtube', seoSlug:'youtube', icon:'https://play-lh.googleusercontent.com/lMoItBgdPPVDJsNOVtP26EKHePkwBg-PkuY9NOrc-fumRtTFP4XhpUNk_22syN4Datc', rating:4.1, size:'80 MB', installs:'10B+', description:'المنصة الأولى لمشاهدة الفيديوهات. تابع قنواتك المفضلة واكتشف محتوى جديد كل يوم.', conditions:['بعض المحتوى يتطلب حساب Google'], directUrl:'https://play.google.com/store/apps/details?id=com.google.android.youtube', downloads:980, featured:true },
+  ];
+}
+
+/* ═══ INIT ═══ */
+loadApp();
+</script>
+</body>
+</html>

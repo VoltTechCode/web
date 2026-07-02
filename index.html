@@ -1,0 +1,1099 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+  <meta name="theme-color" content="#0f0f13"/>
+  <meta name="description" content="فولت تك - متجر التطبيقات المتقدم. اكتشف وحمّل أفضل التطبيقات مجاناً."/>
+  <meta property="og:title" content="فولت تك | Volt Tech"/>
+  <meta property="og:description" content="متجر التطبيقات المتقدم — اكتشف وحمّل أفضل التطبيقات"/>
+  <meta property="og:type" content="website"/>
+  <link rel="manifest" href="/manifest.json"/>
+  <link rel="apple-touch-icon" href="/icons/icon-192.png"/>
+  <title>فولت تك | Volt Tech — متجر التطبيقات</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg-primary:    #0f0f13;
+      --bg-secondary:  #17171e;
+      --bg-card:       #1e1e28;
+      --bg-card-hover: #252532;
+      --border:        rgba(255,255,255,0.07);
+      --border-strong: rgba(255,255,255,0.14);
+      --text-primary:   #f0f0f5;
+      --text-secondary: #9999b2;
+      --text-muted:     #55556a;
+      --accent:        #6c63ff;
+      --accent-hover:  #7b73ff;
+      --accent-glow:   rgba(108,99,255,0.18);
+      --accent-soft:   rgba(108,99,255,0.12);
+      --success:  #22c55e;
+      --warning:  #f59e0b;
+      --danger:   #ef4444;
+      --radius-sm: 8px; --radius-md: 14px; --radius-lg: 20px; --radius-xl: 28px;
+      --shadow-card: 0 2px 20px rgba(0,0,0,0.4);
+      --shadow-modal: 0 8px 48px rgba(0,0,0,0.7);
+      --transition: 0.22s cubic-bezier(0.4,0,0.2,1);
+      --font-ar: 'Cairo', system-ui, sans-serif;
+      --header-height: 64px;
+      --bottom-nav-height: 68px;
+    }
+    [data-theme="light"] {
+      --bg-primary:#f4f4f8; --bg-secondary:#fff; --bg-card:#fff; --bg-card-hover:#f0f0f6;
+      --border:rgba(0,0,0,0.07); --border-strong:rgba(0,0,0,0.13);
+      --text-primary:#141420; --text-secondary:#55556a; --text-muted:#9999b2;
+      --accent-glow:rgba(108,99,255,0.1); --accent-soft:rgba(108,99,255,0.08);
+      --shadow-card:0 2px 16px rgba(0,0,0,0.1); --shadow-modal:0 8px 48px rgba(0,0,0,0.28);
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-ar); background: var(--bg-primary); color: var(--text-primary); min-height: 100dvh; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+    ::-webkit-scrollbar { width: 4px; } ::-webkit-scrollbar-track { background: transparent; } ::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 4px; }
+
+    /* ─── HEADER ─── */
+    #app-header { position: fixed; top: 0; left: 0; right: 0; z-index: 100; height: var(--header-height); background: rgba(15,15,19,0.88); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); display: flex; align-items: center; padding: 0 16px; gap: 12px; }
+    [data-theme="light"] #app-header { background: rgba(244,244,248,0.9); }
+    .header-logo { display: flex; align-items: center; gap: 8px; text-decoration: none; flex-shrink: 0; }
+    .logo-icon { width: 34px; height: 34px; background: var(--accent); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; color: white; }
+    .logo-text { font-size: 16px; font-weight: 700; color: var(--text-primary); }
+    .logo-text span { color: var(--accent); }
+    .header-search-wrap { flex: 1; position: relative; }
+    #main-search { width: 100%; height: 40px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 999px; padding: 0 16px 0 42px; font-family: var(--font-ar); font-size: 14px; color: var(--text-primary); outline: none; direction: rtl; transition: border-color var(--transition), box-shadow var(--transition); }
+    #main-search:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); }
+    #main-search::placeholder { color: var(--text-muted); }
+    .search-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 16px; pointer-events: none; }
+    .search-spinner { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); width: 16px; height: 16px; border: 2px solid var(--accent-soft); border-top-color: var(--accent); border-radius: 50%; animation: spin 0.7s linear infinite; display: none; }
+    .header-actions { display: flex; gap: 6px; flex-shrink: 0; }
+    .icon-btn { width: 36px; height: 36px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text-secondary); font-size: 16px; transition: all var(--transition); -webkit-tap-highlight-color: transparent; }
+    .icon-btn:hover { background: var(--bg-card-hover); color: var(--text-primary); }
+
+    /* ─── SEARCH DROPDOWN ─── */
+    #search-dropdown { position: absolute; top: calc(100% + 8px); left: 0; right: 0; background: var(--bg-card); border: 1px solid var(--border-strong); border-radius: var(--radius-md); box-shadow: var(--shadow-modal); z-index: 200; max-height: 70vh; overflow-y: auto; display: none; flex-direction: column; }
+    #search-dropdown.visible { display: flex; }
+    .search-section-title { font-size: 11px; font-weight: 600; letter-spacing: 0.5px; color: var(--text-muted); text-transform: uppercase; padding: 12px 16px 6px; }
+    .search-result-item { display: flex; align-items: center; gap: 12px; padding: 10px 16px; cursor: pointer; transition: background var(--transition); border-bottom: 1px solid var(--border); }
+    .search-result-item:last-child { border-bottom: none; }
+    .search-result-item:hover { background: var(--bg-card-hover); }
+    .search-result-icon { width: 42px; height: 42px; border-radius: 10px; flex-shrink: 0; background: var(--accent-soft); display: flex; align-items: center; justify-content: center; overflow: hidden; }
+    .search-result-icon img { width: 100%; height: 100%; object-fit: cover; }
+    .search-result-info { flex: 1; min-width: 0; }
+    .search-result-name { font-size: 14px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .search-result-dev { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+    .search-result-rating { font-size: 12px; color: var(--warning); flex-shrink: 0; }
+
+    /* ─── PAGES ─── */
+    #page-wrap { padding-top: var(--header-height); padding-bottom: var(--bottom-nav-height); min-height: 100dvh; }
+    .page { display: none; } .page.active { display: block; }
+
+    /* ─── HOME ─── */
+    .hero-banner { margin: 16px; background: linear-gradient(135deg, #1a1730 0%, #0f0f1a 100%); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 24px 20px; position: relative; overflow: hidden; }
+    .hero-banner::before { content: ''; position: absolute; top: -40px; right: -40px; width: 180px; height: 180px; background: var(--accent); border-radius: 50%; opacity: 0.06; filter: blur(40px); }
+    .hero-badge { display: inline-flex; align-items: center; gap: 5px; background: var(--accent-soft); border: 1px solid rgba(108,99,255,0.3); color: var(--accent); font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 20px; margin-bottom: 12px; }
+    .hero-title { font-size: 22px; font-weight: 900; line-height: 1.3; margin-bottom: 8px; }
+    .hero-title span { color: var(--accent); }
+    .hero-sub { font-size: 13px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 18px; }
+    .hero-stats { display: flex; gap: 20px; }
+    .hero-stat { text-align: center; }
+    .hero-stat-num { font-size: 18px; font-weight: 700; color: var(--accent); }
+    .hero-stat-label { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+    .section-head { display: flex; align-items: center; justify-content: space-between; padding: 20px 16px 12px; }
+    .section-title { font-size: 17px; font-weight: 700; }
+    .section-link { font-size: 13px; color: var(--accent); text-decoration: none; font-weight: 500; cursor: pointer; }
+    .cats-scroll { display: flex; gap: 10px; padding: 0 16px 4px; overflow-x: auto; scrollbar-width: none; }
+    .cats-scroll::-webkit-scrollbar { display: none; }
+    .cat-chip { display: flex; align-items: center; gap: 6px; padding: 8px 14px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 999px; font-size: 13px; font-weight: 500; white-space: nowrap; cursor: pointer; transition: all var(--transition); -webkit-tap-highlight-color: transparent; }
+    .cat-chip:hover, .cat-chip.active { background: var(--accent); border-color: var(--accent); color: white; }
+
+    /* ─── APP CARDS ─── */
+    .apps-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 0 16px; }
+    .app-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px; cursor: pointer; transition: all var(--transition); -webkit-tap-highlight-color: transparent; position: relative; overflow: hidden; }
+    .app-card:hover { background: var(--bg-card-hover); border-color: var(--border-strong); transform: translateY(-1px); }
+    .app-card-icon { width: 56px; height: 56px; border-radius: 14px; margin-bottom: 10px; background: var(--accent-soft); display: flex; align-items: center; justify-content: center; font-size: 26px; overflow: hidden; }
+    .app-card-icon img { width: 100%; height: 100%; object-fit: cover; border-radius: 14px; }
+    .app-card-name { font-size: 14px; font-weight: 700; margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .app-card-dev { font-size: 11px; color: var(--text-muted); margin-bottom: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .app-card-meta { display: flex; align-items: center; justify-content: space-between; }
+    .app-rating { display: flex; align-items: center; gap: 3px; font-size: 12px; color: var(--warning); font-weight: 600; }
+    .app-install-btn { padding: 5px 12px; background: var(--accent-soft); border: 1px solid rgba(108,99,255,0.3); border-radius: 20px; font-size: 12px; font-weight: 600; color: var(--accent); cursor: pointer; transition: all var(--transition); font-family: var(--font-ar); }
+    .app-install-btn:hover { background: var(--accent); color: white; }
+    .app-badge-new { position: absolute; top: 8px; left: 8px; background: var(--success); color: white; font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 6px; }
+    .app-badge-hot { position: absolute; top: 8px; left: 8px; background: var(--danger); color: white; font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 6px; }
+    .fav-btn-card { position: absolute; top: 8px; right: 8px; width: 26px; height: 26px; background: rgba(0,0,0,0.3); border: none; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 14px; transition: all var(--transition); }
+    .fav-btn-card:hover { background: rgba(239,68,68,0.2); }
+    .apps-list-h { display: flex; gap: 12px; padding: 0 16px 4px; overflow-x: auto; scrollbar-width: none; }
+    .apps-list-h::-webkit-scrollbar { display: none; }
+    .app-card-h { flex: 0 0 150px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px; cursor: pointer; transition: all var(--transition); }
+    .app-card-h:hover { background: var(--bg-card-hover); }
+    .app-card-h .app-card-icon { width: 48px; height: 48px; border-radius: 12px; margin-bottom: 8px; }
+
+    /* ─── APP DETAIL MODAL ─── */
+    #app-detail-modal { position: fixed; inset: 0; z-index: 400; background: rgba(0,0,0,0.7); backdrop-filter: blur(6px); display: none; align-items: flex-end; }
+    #app-detail-modal.visible { display: flex; }
+    .app-detail-sheet { width: 100%; max-height: 92dvh; background: var(--bg-secondary); border-radius: var(--radius-xl) var(--radius-xl) 0 0; overflow-y: auto; padding-bottom: 24px; animation: slideUp 0.32s cubic-bezier(0.32,0.72,0,1); }
+    .app-detail-handle { width: 36px; height: 4px; background: var(--border-strong); border-radius: 2px; margin: 12px auto 0; }
+    .app-detail-header { display: flex; align-items: flex-start; gap: 14px; padding: 16px 16px 0; }
+    .app-detail-icon { width: 72px; height: 72px; flex-shrink: 0; border-radius: 18px; background: var(--accent-soft); display: flex; align-items: center; justify-content: center; font-size: 34px; overflow: hidden; }
+    .app-detail-icon img { width: 100%; height: 100%; object-fit: cover; border-radius: 18px; }
+    .app-detail-name { font-size: 20px; font-weight: 800; margin-bottom: 4px; }
+    .app-detail-dev { font-size: 13px; color: var(--accent); font-weight: 500; margin-bottom: 8px; }
+    .app-detail-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+    .tag-chip { font-size: 11px; padding: 3px 8px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; color: var(--text-secondary); }
+    .app-detail-actions { display: flex; gap: 10px; padding: 14px 16px 0; }
+    .detail-fav-btn { flex: 1; height: 42px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); font-family: var(--font-ar); font-size: 14px; font-weight: 600; color: var(--text-secondary); cursor: pointer; transition: all var(--transition); }
+    .detail-fav-btn.active { background: rgba(239,68,68,0.1); border-color: rgba(239,68,68,0.3); color: var(--danger); }
+    .detail-share-btn { flex: 1; height: 42px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); font-family: var(--font-ar); font-size: 14px; font-weight: 600; color: var(--text-secondary); cursor: pointer; transition: all var(--transition); }
+    .detail-share-btn:hover { background: var(--bg-card-hover); color: var(--text-primary); }
+    .app-detail-stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: var(--border); margin: 16px; border: 1px solid var(--border); border-radius: var(--radius-md); overflow: hidden; }
+    .app-detail-stat { background: var(--bg-card); padding: 14px 8px; text-align: center; }
+    .app-detail-stat-val { font-size: 16px; font-weight: 700; }
+    .app-detail-stat-lbl { font-size: 11px; color: var(--text-muted); margin-top: 3px; }
+    .app-detail-section { padding: 0 16px 16px; }
+    .app-detail-section-title { font-size: 15px; font-weight: 700; margin-bottom: 10px; }
+    .app-detail-desc { font-size: 14px; color: var(--text-secondary); line-height: 1.7; direction: rtl; }
+    .screenshots-scroll { display: flex; gap: 10px; padding: 0 16px 16px; overflow-x: auto; scrollbar-width: none; }
+    .screenshots-scroll::-webkit-scrollbar { display: none; }
+    .screenshot-img { height: 200px; width: auto; border-radius: var(--radius-md); flex-shrink: 0; object-fit: cover; background: var(--bg-card); border: 1px solid var(--border); }
+    .app-detail-footer { position: sticky; bottom: 0; background: var(--bg-secondary); border-top: 1px solid var(--border); padding: 14px 16px; display: flex; gap: 12px; align-items: center; }
+    .price-label { font-size: 18px; font-weight: 800; flex: 1; }
+    .price-label.free { color: var(--success); }
+    .big-install-btn { flex: 2; height: 48px; background: var(--accent); color: white; border: none; border-radius: var(--radius-md); font-size: 16px; font-weight: 700; font-family: var(--font-ar); cursor: pointer; transition: background var(--transition); display: flex; align-items: center; justify-content: center; gap: 8px; }
+    .big-install-btn:hover { background: var(--accent-hover); }
+    .big-install-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    /* ─── CONDITIONS MODAL ─── */
+    #conditions-modal { position: fixed; inset: 0; z-index: 500; background: rgba(0,0,0,0.75); backdrop-filter: blur(8px); display: none; align-items: flex-end; }
+    #conditions-modal.visible { display: flex; }
+    .conditions-sheet { width: 100%; background: var(--bg-secondary); border-radius: var(--radius-xl) var(--radius-xl) 0 0; padding: 0 0 24px; animation: slideUp 0.3s cubic-bezier(0.32,0.72,0,1); }
+    .conditions-header { padding: 16px; border-bottom: 1px solid var(--border); }
+    .conditions-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px; }
+    .conditions-icon-wrap { width: 42px; height: 42px; background: rgba(245,158,11,0.12); border: 1px solid rgba(245,158,11,0.25); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px; }
+    .conditions-title { font-size: 17px; font-weight: 800; }
+    .conditions-sub { font-size: 13px; color: var(--text-muted); margin-top: 3px; }
+    .conditions-body { padding: 16px; max-height: 40dvh; overflow-y: auto; }
+    .condition-item { display: flex; gap: 12px; align-items: flex-start; padding: 12px 0; border-bottom: 1px solid var(--border); }
+    .condition-item:last-child { border-bottom: none; }
+    .condition-num { width: 26px; height: 26px; flex-shrink: 0; background: var(--warning); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: #000; }
+    .condition-text { font-size: 14px; line-height: 1.6; padding-top: 3px; }
+    .conditions-agree { display: flex; align-items: flex-start; gap: 12px; margin: 0 16px; padding: 14px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); cursor: pointer; }
+    .conditions-agree input[type="checkbox"] { width: 20px; height: 20px; flex-shrink: 0; accent-color: var(--accent); cursor: pointer; margin-top: 1px; }
+    .conditions-agree label { font-size: 13px; color: var(--text-secondary); line-height: 1.5; cursor: pointer; }
+    .conditions-footer { padding: 14px 16px 0; }
+    .proceed-btn { width: 100%; height: 52px; background: var(--accent); color: white; border: none; border-radius: var(--radius-md); font-size: 16px; font-weight: 700; font-family: var(--font-ar); cursor: pointer; opacity: 0.45; transition: all var(--transition); }
+    .proceed-btn.enabled { opacity: 1; }
+    .proceed-btn.enabled:hover { background: var(--accent-hover); }
+
+    /* ─── AD PERMISSION MODAL ─── */
+    #ad-permission-modal { position: fixed; inset: 0; z-index: 600; background: rgba(0,0,0,0.8); backdrop-filter: blur(10px); display: none; align-items: center; justify-content: center; padding: 20px; }
+    #ad-permission-modal.visible { display: flex; }
+    .ad-perm-box { background: var(--bg-secondary); border: 1px solid var(--border-strong); border-radius: var(--radius-xl); padding: 28px 20px; max-width: 360px; width: 100%; text-align: center; animation: scaleIn 0.28s cubic-bezier(0.32,0.72,0,1); }
+    .ad-perm-emoji { font-size: 48px; margin-bottom: 16px; }
+    .ad-perm-title { font-size: 20px; font-weight: 800; margin-bottom: 8px; }
+    .ad-perm-text { font-size: 14px; color: var(--text-secondary); line-height: 1.7; margin-bottom: 24px; }
+    .ad-perm-btns { display: flex; flex-direction: column; gap: 10px; }
+    .ad-allow-btn { width: 100%; height: 52px; background: var(--accent); color: white; border: none; border-radius: var(--radius-md); font-size: 16px; font-weight: 700; font-family: var(--font-ar); cursor: pointer; }
+    .ad-skip-btn { width: 100%; height: 44px; background: transparent; color: var(--text-muted); border: 1px solid var(--border); border-radius: var(--radius-md); font-size: 14px; font-family: var(--font-ar); cursor: pointer; }
+
+    /* ─── AD OVERLAY ─── */
+    #ad-overlay { position: fixed; inset: 0; z-index: 700; background: #000; display: none; flex-direction: column; }
+    #ad-overlay.visible { display: flex; }
+    .ad-overlay-header { padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; background: rgba(255,255,255,0.05); }
+    .ad-label { font-size: 12px; color: rgba(255,255,255,0.5); letter-spacing: 1px; }
+    .ad-countdown { font-size: 13px; font-weight: 600; color: var(--warning); background: rgba(245,158,11,0.15); border: 1px solid rgba(245,158,11,0.3); padding: 4px 12px; border-radius: 20px; }
+    .ad-content-area { flex: 1; display: flex; align-items: center; justify-content: center; }
+    .ad-placeholder { width: 100%; max-width: 380px; aspect-ratio: 9/16; background: linear-gradient(160deg, #1a1a2e 0%, #16213e 100%); border-radius: var(--radius-lg); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; padding: 24px; text-align: center; }
+    .ad-close-btn { margin: 0 16px 20px; height: 52px; border-radius: var(--radius-md); background: var(--accent); color: white; border: none; font-size: 15px; font-weight: 700; font-family: var(--font-ar); cursor: pointer; opacity: 0.4; transition: opacity var(--transition); pointer-events: none; }
+    .ad-close-btn.ready { opacity: 1; pointer-events: all; }
+
+    /* ─── BOTTOM NAV ─── */
+    #bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; z-index: 100; height: var(--bottom-nav-height); background: var(--bg-secondary); border-top: 1px solid var(--border); display: flex; align-items: center; padding: 0 8px; padding-bottom: env(safe-area-inset-bottom, 0px); }
+    .nav-item { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; padding: 8px; cursor: pointer; color: var(--text-muted); transition: color var(--transition); -webkit-tap-highlight-color: transparent; border-radius: var(--radius-md); }
+    .nav-item.active { color: var(--accent); }
+    .nav-item svg { width: 22px; height: 22px; stroke-width: 1.7; fill: none; stroke: currentColor; }
+    .nav-label { font-size: 10px; font-weight: 600; }
+    .nav-item.active .nav-icon-wrap { background: var(--accent-soft); border-radius: 10px; padding: 4px 14px; }
+
+    /* ─── FAVORITES PAGE ─── */
+    #fav-page { padding: 16px; }
+    .fav-empty { text-align: center; padding: 60px 20px; }
+    .fav-empty-icon { font-size: 64px; margin-bottom: 16px; }
+    .fav-empty-title { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+    .fav-empty-sub { font-size: 14px; color: var(--text-muted); line-height: 1.6; }
+
+    /* ─── PROFILE PAGE ─── */
+    #profile-page { padding: 16px; }
+    .profile-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 24px; text-align: center; margin-bottom: 16px; }
+    .profile-avatar { width: 80px; height: 80px; border-radius: 50%; background: var(--accent); display: flex; align-items: center; justify-content: center; font-size: 32px; font-weight: 800; color: white; margin: 0 auto 14px; overflow: hidden; }
+    .profile-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .profile-name { font-size: 20px; font-weight: 800; margin-bottom: 4px; }
+    .profile-email { font-size: 13px; color: var(--text-muted); margin-bottom: 16px; }
+    .profile-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .profile-stat { background: var(--bg-primary); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 12px; text-align: center; }
+    .profile-stat-val { font-size: 22px; font-weight: 800; color: var(--accent); }
+    .profile-stat-lbl { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+    .profile-section { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); margin-bottom: 12px; overflow: hidden; }
+    .profile-section-title { font-size: 13px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; padding: 14px 16px 8px; }
+    .profile-row { display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; border-bottom: 1px solid var(--border); cursor: pointer; transition: background var(--transition); }
+    .profile-row:last-child { border-bottom: none; }
+    .profile-row:hover { background: var(--bg-card-hover); }
+    .profile-row-left { display: flex; align-items: center; gap: 12px; }
+    .profile-row-icon { font-size: 20px; width: 36px; height: 36px; background: var(--bg-primary); border-radius: 10px; display: flex; align-items: center; justify-content: center; }
+    .profile-row-label { font-size: 15px; font-weight: 500; }
+    .profile-row-arrow { color: var(--text-muted); font-size: 18px; }
+    .login-cta { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 32px 20px; text-align: center; margin-bottom: 16px; }
+    .login-cta-icon { font-size: 52px; margin-bottom: 14px; }
+    .login-cta-title { font-size: 20px; font-weight: 800; margin-bottom: 8px; }
+    .login-cta-sub { font-size: 13px; color: var(--text-muted); margin-bottom: 20px; line-height: 1.6; }
+    .login-cta-btn { width: 100%; height: 50px; background: var(--accent); color: white; border: none; border-radius: var(--radius-md); font-size: 16px; font-weight: 700; font-family: var(--font-ar); cursor: pointer; transition: background var(--transition); }
+    .login-cta-btn:hover { background: var(--accent-hover); }
+    .google-signin-btn { width: 100%; height: 50px; background: var(--bg-card); color: var(--text-primary); border: 1px solid var(--border-strong); border-radius: var(--radius-md); font-size: 15px; font-weight: 600; font-family: var(--font-ar); cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 10px; transition: background var(--transition); }
+    .google-signin-btn:hover { background: var(--bg-card-hover); }
+
+    /* ─── TOAST ─── */
+    .toast { position: fixed; bottom: calc(var(--bottom-nav-height) + 14px); left: 50%; transform: translateX(-50%) translateY(16px); background: var(--bg-card); border: 1px solid var(--border-strong); border-radius: var(--radius-md); padding: 12px 18px; font-size: 14px; font-weight: 500; white-space: nowrap; z-index: 800; opacity: 0; transition: all 0.3s; box-shadow: var(--shadow-modal); }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    /* ─── SKELETON ─── */
+    .skeleton { background: linear-gradient(90deg, var(--bg-card) 25%, var(--bg-card-hover) 50%, var(--bg-card) 75%); background-size: 200% 100%; animation: shimmer 1.4s infinite; border-radius: var(--radius-sm); }
+
+    /* ─── ANIMATIONS ─── */
+    /* ─── SIMILAR APPS ─── */
+    .similar-apps-scroll { display: flex; gap: 10px; padding: 0 16px 16px; overflow-x: auto; scrollbar-width: none; }
+    .similar-apps-scroll::-webkit-scrollbar { display: none; }
+    .similar-app-card { flex: 0 0 100px; display: flex; flex-direction: column; align-items: center; gap: 6px; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+    .similar-app-icon { width: 64px; height: 64px; border-radius: 16px; background: var(--accent-soft); overflow: hidden; display: flex; align-items: center; justify-content: center; font-size: 28px; border: 1px solid var(--border); flex-shrink: 0; transition: transform var(--transition); }
+    .similar-app-icon img { width: 100%; height: 100%; object-fit: cover; }
+    .similar-app-card:hover .similar-app-icon { transform: scale(1.06); }
+    .similar-app-name { font-size: 11px; font-weight: 600; text-align: center; line-height: 1.3; color: var(--text-primary); }
+    .similar-app-rating { font-size: 11px; color: var(--warning); }
+
+    /* ─── REVIEWS ─── */
+    .review-item { background: var(--bg-primary); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 12px; margin-bottom: 8px; }
+    .review-header { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+    .review-avatar { width: 32px; height: 32px; border-radius: 50%; background: var(--accent-soft); display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; color: var(--accent); flex-shrink: 0; }
+    .review-name { font-size: 13px; font-weight: 600; flex: 1; }
+    .review-stars { font-size: 12px; color: var(--warning); }
+    .review-text { font-size: 13px; color: var(--text-secondary); line-height: 1.6; }
+    .review-date { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
+
+    @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+    @keyframes scaleIn { from { transform: scale(0.88); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+    @keyframes spin { to { transform: translateY(-50%) rotate(360deg); } }
+    @keyframes shimmer { to { background-position: -200% 0; } }
+    @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.5; } }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; } }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header id="app-header">
+  <a href="#" class="header-logo" onclick="goHome(event)">
+    <div class="logo-icon">⚡</div>
+    <span class="logo-text"><span>Volt</span> Tech</span>
+  </a>
+  <div class="header-search-wrap">
+    <span class="search-icon">🔍</span>
+    <div class="search-spinner" id="search-spinner"></div>
+    <input id="main-search" type="search" placeholder="ابحث عن أي تطبيق..." autocomplete="off"/>
+    <div id="search-dropdown"></div>
+  </div>
+  <div class="header-actions">
+    <button class="icon-btn" onclick="toggleTheme()" id="theme-btn">🌙</button>
+  </div>
+</header>
+
+<!-- PAGES -->
+<div id="page-wrap">
+
+  <!-- HOME -->
+  <div id="home-page" class="page active">
+    <div class="hero-banner">
+      <div class="hero-badge">⚡ المتجر المتقدم</div>
+      <div class="hero-title">اكتشف التطبيقات<br/><span>الأفضل لك</span></div>
+      <div class="hero-sub">آلاف التطبيقات المختارة بعناية مع شروط تشغيل واضحة وتجربة تنزيل سلسة.</div>
+      <div class="hero-stats">
+        <div class="hero-stat"><div class="hero-stat-num" id="stat-apps">+0</div><div class="hero-stat-label">تطبيق</div></div>
+        <div class="hero-stat"><div class="hero-stat-num" id="stat-downloads">0</div><div class="hero-stat-label">تنزيل</div></div>
+        <div class="hero-stat"><div class="hero-stat-num">100%</div><div class="hero-stat-label">موثوق</div></div>
+      </div>
+    </div>
+    <div class="section-head"><div class="section-title">التصنيفات</div></div>
+    <div class="cats-scroll" id="cats-scroll">
+      <div class="cat-chip active" data-cat="all" onclick="filterCat(this,'all')"><span>🌐</span> الكل</div>
+      <div class="cat-chip" data-cat="games" onclick="filterCat(this,'games')"><span>🎮</span> ألعاب</div>
+      <div class="cat-chip" data-cat="social" onclick="filterCat(this,'social')"><span>💬</span> تواصل</div>
+      <div class="cat-chip" data-cat="tools" onclick="filterCat(this,'tools')"><span>🔧</span> أدوات</div>
+      <div class="cat-chip" data-cat="education" onclick="filterCat(this,'education')"><span>📚</span> تعليم</div>
+      <div class="cat-chip" data-cat="health" onclick="filterCat(this,'health')"><span>💪</span> صحة</div>
+      <div class="cat-chip" data-cat="finance" onclick="filterCat(this,'finance')"><span>💰</span> مالية</div>
+    </div>
+    <div class="section-head">
+      <div class="section-title">مميز اليوم</div>
+    </div>
+    <div class="apps-list-h" id="featured-list"></div>
+    <div class="section-head">
+      <div class="section-title">جميع التطبيقات</div>
+    </div>
+    <div class="apps-grid" id="apps-grid"></div>
+    <div style="height:16px"></div>
+  </div>
+
+  <!-- SEARCH RESULTS -->
+  <div id="search-page" class="page">
+    <div style="padding:16px 16px 8px">
+      <div class="section-title" id="search-page-title">نتائج البحث</div>
+      <div style="font-size:13px;color:var(--text-muted);margin-top:4px" id="search-count"></div>
+    </div>
+    <div class="apps-grid" id="search-results-grid" style="padding:0 16px"></div>
+    <div style="height:16px"></div>
+  </div>
+
+  <!-- FAVORITES -->
+  <div id="fav-page" class="page">
+    <div class="section-head"><div class="section-title">❤️ المفضلة</div></div>
+    <div id="fav-content"></div>
+  </div>
+
+  <!-- PROFILE -->
+  <div id="profile-page" class="page">
+    <div class="section-head"><div class="section-title">👤 حسابي</div></div>
+    <div id="profile-content"></div>
+  </div>
+
+</div><!-- /page-wrap -->
+
+<!-- BOTTOM NAV -->
+<nav id="bottom-nav">
+  <div class="nav-item active" data-nav="home" onclick="navTo(this,'home-page')">
+    <div class="nav-icon-wrap">
+      <svg viewBox="0 0 24 24"><path d="M3 9L12 2L21 9V20a1 1 0 01-1 1H5a1 1 0 01-1-1V9z"/><path d="M9 21V12H15V21"/></svg>
+    </div>
+    <span class="nav-label">الرئيسية</span>
+  </div>
+  <div class="nav-item" data-nav="search" onclick="focusSearch()">
+    <div class="nav-icon-wrap">
+      <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+    </div>
+    <span class="nav-label">بحث</span>
+  </div>
+  <div class="nav-item" data-nav="fav" onclick="navTo(this,'fav-page');renderFavPage()">
+    <div class="nav-icon-wrap">
+      <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+    </div>
+    <span class="nav-label">المفضلة</span>
+  </div>
+  <div class="nav-item" data-nav="profile" onclick="navTo(this,'profile-page');renderProfilePage()">
+    <div class="nav-icon-wrap">
+      <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+    </div>
+    <span class="nav-label">حسابي</span>
+  </div>
+</nav>
+
+<!-- APP DETAIL MODAL -->
+<div id="app-detail-modal">
+  <div class="app-detail-sheet" id="app-detail-sheet">
+    <div class="app-detail-handle"></div>
+    <div class="app-detail-header">
+      <div class="app-detail-icon" id="detail-icon"></div>
+      <div style="flex:1;min-width:0">
+        <div class="app-detail-name" id="detail-name"></div>
+        <div class="app-detail-dev" id="detail-dev"></div>
+        <div class="app-detail-tags" id="detail-tags"></div>
+      </div>
+      <button class="icon-btn" onclick="closeAppDetail()">✕</button>
+    </div>
+    <div class="app-detail-actions">
+      <button class="detail-fav-btn" id="detail-fav-btn" onclick="toggleFavFromDetail()">🤍 المفضلة</button>
+      <button class="detail-share-btn" onclick="shareApp()">🔗 مشاركة</button>
+    </div>
+    <div class="app-detail-stats">
+      <div class="app-detail-stat"><div class="app-detail-stat-val" id="detail-rating">-</div><div class="app-detail-stat-lbl">⭐ تقييم</div></div>
+      <div class="app-detail-stat"><div class="app-detail-stat-val" id="detail-size">-</div><div class="app-detail-stat-lbl">📦 الحجم</div></div>
+      <div class="app-detail-stat"><div class="app-detail-stat-val" id="detail-installs">-</div><div class="app-detail-stat-lbl">📥 تنزيل</div></div>
+    </div>
+    <div class="app-detail-section" id="screenshots-section" style="display:none">
+      <div class="app-detail-section-title">لقطات الشاشة</div>
+      <div class="screenshots-scroll" id="detail-screenshots"></div>
+    </div>
+    <div class="app-detail-section">
+      <div class="app-detail-section-title">عن التطبيق</div>
+      <div class="app-detail-desc" id="detail-desc"></div>
+    </div>
+    <div class="app-detail-section" id="detail-version-section" style="display:none">
+      <div class="app-detail-section-title">معلومات إضافية</div>
+      <div id="detail-extra" style="font-size:13px;color:var(--text-secondary);line-height:2"></div>
+    </div>
+
+    <!-- REVIEWS -->
+    <div class="app-detail-section" id="detail-reviews-section" style="display:none">
+      <div class="app-detail-section-title">⭐ آراء المستخدمين</div>
+      <div id="detail-reviews"></div>
+    </div>
+
+    <!-- SIMILAR APPS -->
+    <div id="similar-apps-section" style="display:none">
+      <div class="app-detail-section-title" style="padding:0 16px 10px">تطبيقات مشابهة</div>
+      <div class="similar-apps-scroll" id="similar-apps-list"></div>
+    </div>
+
+    <div class="app-detail-footer">
+      <div class="price-label free">مجاني</div>
+      <button class="big-install-btn" id="install-main-btn" onclick="triggerInstall()">⬇️ تنزيل الآن</button>
+    </div>
+  </div>
+</div>
+
+<!-- CONDITIONS MODAL -->
+<div id="conditions-modal">
+  <div class="conditions-sheet">
+    <div class="conditions-header">
+      <div class="conditions-top">
+        <div class="conditions-icon-wrap">⚠️</div>
+        <button class="icon-btn" onclick="closeConditions()">✕</button>
+      </div>
+      <div class="conditions-title" id="cond-app-name">شروط التشغيل</div>
+      <div class="conditions-sub">يرجى قراءة الشروط التالية قبل المتابعة</div>
+    </div>
+    <div class="conditions-body" id="conditions-list"></div>
+    <div class="conditions-agree" onclick="toggleAgree()">
+      <input type="checkbox" id="agree-check" onchange="updateProceedBtn()"/>
+      <label for="agree-check">أقر بأنني قرأت جميع شروط التشغيل وأوافق عليها، وأتحمل كامل المسؤولية عن تشغيل التطبيق وفق هذه الشروط.</label>
+    </div>
+    <div class="conditions-footer">
+      <button class="proceed-btn" id="proceed-btn" onclick="proceedDownload()" disabled>المتابعة والتنزيل ⬇️</button>
+    </div>
+  </div>
+</div>
+
+<!-- AD PERMISSION MODAL -->
+<div id="ad-permission-modal">
+  <div class="ad-perm-box">
+    <div class="ad-perm-emoji">📢</div>
+    <div class="ad-perm-title">رسالة قصيرة من رعاتنا</div>
+    <div class="ad-perm-text" id="ad-perm-text">للحفاظ على خدماتنا مجانية لك، نحتاج لعرض إعلان قصير مرة كل 3 أيام فقط. شكراً لدعمك! 🙏</div>
+    <div class="ad-perm-btns">
+      <button class="ad-allow-btn" onclick="allowAd()">✅ موافق — أدعم المنصة</button>
+      <button class="ad-skip-btn" onclick="skipAd()">تخطي الآن</button>
+    </div>
+  </div>
+</div>
+
+<!-- AD OVERLAY -->
+<div id="ad-overlay">
+  <div class="ad-overlay-header">
+    <span class="ad-label">إعلان مدفوع</span>
+    <span class="ad-countdown" id="ad-countdown">انتظر 10 ثوانٍ</span>
+  </div>
+  <div class="ad-content-area">
+    <div class="ad-placeholder">
+      <div style="font-size:48px">⚡</div>
+      <div style="font-size:20px;font-weight:800;color:#fff">فولت تك</div>
+      <div style="font-size:14px;color:rgba(255,255,255,0.6);line-height:1.6">هذا المكان مخصص لإعلان AdMob</div>
+      <div id="admob-ad-slot" style="width:320px;min-height:50px;margin-top:12px"></div>
+    </div>
+  </div>
+  <button class="ad-close-btn" id="ad-close-btn" onclick="closeAd()">إغلاق الإعلان والمتابعة</button>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+import {
+  getFirestore, collection, getDocs, addDoc, doc,
+  updateDoc, deleteDoc, getDoc, setDoc, query,
+  orderBy, limit, where, increment, serverTimestamp
+} from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+import {
+  getAuth, signOut, onAuthStateChanged,
+  GoogleAuthProvider, signInWithPopup
+} from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
+
+const firebaseConfig = {
+  apiKey:            "AIzaSyDqiO6lxMfbsBGbTln1TwDnZP5VpKrbYIw",
+  authDomain:        "volt-tech-814a5.firebaseapp.com",
+  projectId:         "volt-tech-814a5",
+  storageBucket:     "volt-tech-814a5.firebasestorage.app",
+  messagingSenderId: "99527787970",
+  appId:             "1:99527787970:web:86dddbaf4aaf739536025b"
+};
+
+const fbApp = initializeApp(firebaseConfig);
+const db    = getFirestore(fbApp);
+const auth  = getAuth(fbApp);
+const gProvider = new GoogleAuthProvider();
+
+// ── STATE ──
+let allApps     = [];
+let currentApp  = null;
+let downloadUrl = null;
+let currentUser = null;
+let favorites   = JSON.parse(localStorage.getItem('vt-favs') || '[]');
+let searchTimer = null;
+let currentCat  = 'all';
+
+// ── THEME ──
+window.toggleTheme = function() {
+  const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+  document.documentElement.setAttribute('data-theme', isLight ? '' : 'light');
+  document.getElementById('theme-btn').textContent = isLight ? '🌙' : '☀️';
+  localStorage.setItem('vt-theme', isLight ? 'dark' : 'light');
+};
+(function() {
+  if (localStorage.getItem('vt-theme') === 'light') {
+    document.documentElement.setAttribute('data-theme', 'light');
+    document.getElementById('theme-btn').textContent = '☀️';
+  }
+})();
+
+// ── NAVIGATION ──
+window.navTo = function(el, pageId) {
+  document.querySelectorAll('.nav-item').forEach(n => {
+    n.classList.remove('active');
+    n.querySelector('.nav-icon-wrap').removeAttribute('style');
+  });
+  el.classList.add('active');
+  el.querySelector('.nav-icon-wrap').style.cssText = 'background:var(--accent-soft);border-radius:10px;padding:4px 14px';
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById(pageId).classList.add('active');
+};
+
+window.goHome = function(e) {
+  e.preventDefault();
+  const homeNav = document.querySelector('[data-nav="home"]');
+  navTo(homeNav, 'home-page');
+};
+
+window.focusSearch = function() {
+  const searchNav = document.querySelector('[data-nav="search"]');
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  searchNav.classList.add('active');
+  document.getElementById('main-search').focus();
+};
+
+// ── AD SYSTEM ──
+const AD_INTERVAL_DAYS = parseInt(localStorage.getItem('vt-ad-days') || '3');
+function checkAdSchedule() {
+  const last = parseInt(localStorage.getItem('vt-last-ad') || '0');
+  const diff = (Date.now() - last) / (1000 * 60 * 60 * 24);
+  if (!last || diff >= AD_INTERVAL_DAYS) setTimeout(showAdPermission, 3000);
+}
+function showAdPermission() {
+  const t = localStorage.getItem('vt-ad-perm-text');
+  if (t) document.getElementById('ad-perm-text').textContent = t;
+  document.getElementById('ad-permission-modal').classList.add('visible');
+}
+window.allowAd = function() {
+  document.getElementById('ad-permission-modal').classList.remove('visible');
+  showAdOverlay();
+};
+window.skipAd = function() {
+  document.getElementById('ad-permission-modal').classList.remove('visible');
+  localStorage.setItem('vt-last-ad', Date.now().toString());
+};
+function showAdOverlay() {
+  document.getElementById('ad-overlay').classList.add('visible');
+  let sec = 10;
+  const cd = document.getElementById('ad-countdown');
+  const btn = document.getElementById('ad-close-btn');
+  const t = setInterval(() => {
+    sec--;
+    cd.textContent = `انتظر ${sec} ثانية`;
+    if (sec <= 0) { clearInterval(t); cd.textContent = 'يمكنك الإغلاق الآن'; btn.classList.add('ready'); }
+  }, 1000);
+  try { addDoc(collection(db, 'adLogs'), { event:'impression', timestamp:serverTimestamp(), userId:currentUser?.uid||'anon' }); } catch(e){}
+}
+window.closeAd = function() {
+  document.getElementById('ad-overlay').classList.remove('visible');
+  document.getElementById('ad-close-btn').classList.remove('ready');
+  localStorage.setItem('vt-last-ad', Date.now().toString());
+};
+
+// ── LOAD APPS ──
+async function loadApps() {
+  renderSkeletons();
+  try {
+    const snap = await getDocs(query(collection(db,'apps'), orderBy('downloads','desc'), limit(100)));
+    allApps = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  } catch(e) {
+    allApps = getDemoApps();
+  }
+  renderApps(allApps);
+  renderFeatured(allApps.filter(a=>a.featured||a.badge==='hot').slice(0,8) || allApps.slice(0,6));
+  document.getElementById('stat-apps').textContent = '+' + allApps.length;
+  const totalDL = allApps.reduce((s,a) => s + (a.downloads||0), 0);
+  const dlEl = document.getElementById('stat-downloads');
+  if (dlEl) dlEl.textContent = totalDL >= 1000 ? (totalDL/1000).toFixed(1)+'k' : totalDL.toString();
+  updateFavBadge();
+}
+
+function getDemoApps() {
+  return [
+    { id:'com.whatsapp', name:'واتساب', developer:'Meta Platforms', category:'social', icon:'https://play-lh.googleusercontent.com/bYtqbOcTYOlgc6gqZ2rwb8lptHuwlNE75zYJu6Bn076-hTmvd96HH-6v7S0YUAAJXoJN', rating:4.3, size:'55 MB', installs:'5B+', version:'2.24.1', description:'واتساب هو تطبيق المراسلة الأشهر في العالم. أرسل رسائل ومكالمات صوتية ومرئية مجانية لأصدقائك وعائلتك في أي مكان.', conditions:['يتطلب اتصال إنترنت مستمر','يحتاج إذن الوصول للكاميرا والميكروفون','متوافق مع أندرويد 5.0 فما فوق','تأكد من صحة رقم هاتفك'], directUrl:'https://play.google.com/store/apps/details?id=com.whatsapp', downloads:1200, badge:'hot', featured:true },
+    { id:'com.zhiliaoapp.musically', name:'تيك توك', developer:'ByteDance', category:'social', icon:'https://play-lh.googleusercontent.com/iBYjvYuNq8BB7EEEHktuurReilh5N7B1AHq9Y8Y10_TkPJlmLMH7D0r6PXeYqKHWKw', rating:4.5, size:'100 MB', installs:'5B+', version:'34.0', description:'تيك توك هي منصة الفيديو القصير الأولى عالمياً. اكتشف محتوى لا ينتهي وشارك إبداعاتك مع العالم.', conditions:['يحتاج إذن الكاميرا والميكروفون','الحد الأدنى للعمر 13 سنة','يتطلب إنترنت مستمر'], directUrl:'https://play.google.com/store/apps/details?id=com.zhiliaoapp.musically', downloads:1100, badge:'hot', featured:true },
+    { id:'com.google.android.youtube', name:'يوتيوب', developer:'Google LLC', category:'social', icon:'https://play-lh.googleusercontent.com/lMoItBgdPPVDJsNOVtP26EKHePkwBg-PkuY9NOrc-fumRtTFP4XhpUNk_22syN4Datc', rating:4.1, size:'80 MB', installs:'10B+', description:'المنصة الأولى لمشاهدة الفيديوهات ورفع المحتوى. تابع قنواتك المفضلة واكتشف محتوى جديد كل يوم.', conditions:['بعض المحتوى يتطلب حساب Google','Premium لمحتوى بدون إعلانات'], directUrl:'https://play.google.com/store/apps/details?id=com.google.android.youtube', downloads:980, featured:true },
+    { id:'com.pubg.imobile', name:'ببجي موبايل', developer:'Krafton', category:'games', icon:'https://play-lh.googleusercontent.com/JRd05pyBH41qjgsR4jbKDjdJMCUPGj9mQalNYnAlmQCm9sCKA2z50ym5p4lWkz6RiYg', rating:4.2, size:'2.2 GB', installs:'1B+', description:'لعبة البقاء الأشهر على الجوال. قاتل أو مُقاتَل في ساحة معركة ضخمة مع 100 لاعب!', conditions:['يتطلب رام لا يقل عن 3GB','مساحة فارغة 3GB على الأقل','أندرويد 5.1.1 أو أحدث','اتصال إنترنت سريع 4G','أوقف VPN أثناء اللعب'], directUrl:'https://play.google.com/store/apps/details?id=com.pubg.imobile', downloads:760, badge:'hot' },
+    { id:'com.instagram.android', name:'انستغرام', developer:'Meta Platforms', category:'social', icon:'https://play-lh.googleusercontent.com/VRMWkE5p3CkWhJs6nv-9ZsLAs1QOg5ob1_3qg-rckwYW7yp1fMrYZqnZkBpDLuo_Msk', rating:4.0, size:'65 MB', installs:'5B+', description:'شارك لحظاتك عبر الصور والريلز والقصص. تواصل مع أصدقائك واكتشف محتوى ملهم.', conditions:['يحتاج حساب Meta','الحد الأدنى للعمر 13 سنة'], directUrl:'https://play.google.com/store/apps/details?id=com.instagram.android', downloads:900 },
+    { id:'com.king.candycrushsaga', name:'كاندي كراش', developer:'King', category:'games', icon:'https://play-lh.googleusercontent.com/4VA9M7v65hniLF4wXwMIhzCz2DtleSMm4dGHqq4nZbpKYKVNEhY5ZNPiivSrOiB4dPA', rating:4.4, size:'130 MB', installs:'1B+', description:'أكثر الألعاب إدماناً! اجمع الحلوى ومرر آلاف المستويات الممتعة.', conditions:['يمكن اللعب بدون إنترنت','المشتريات الداخلية اختيارية 100%'], directUrl:'https://play.google.com/store/apps/details?id=com.king.candycrushsaga', downloads:430, badge:'new' },
+    { id:'com.snapchat.android', name:'سناب شات', developer:'Snap Inc.', category:'social', icon:'https://play-lh.googleusercontent.com/KxeSAjPTKliEHEsM8Mj2oH5kPRMmHLRAFMaQVgXODX07RvlzMqFaMVH7sNTB_iGEnVU', rating:4.1, size:'88 MB', installs:'1B+', description:'أرسل صور ومقاطع تختفي تلقائياً. شارك قصتك اليومية مع أصدقائك.', conditions:['يحتاج إذن الكاميرا','الحد الأدنى للعمر 13 سنة'], directUrl:'https://play.google.com/store/apps/details?id=com.snapchat.android', downloads:720, featured:true },
+    { id:'com.capcut.international', name:'كابكت', developer:'Bytedance', category:'tools', icon:'https://play-lh.googleusercontent.com/lk1SZQfN9NLhFHnfMdBIIYPMHjBa5YMjAOlTvqr06GNjzPv8kXKAVsHmXqMerCYIBUI', rating:4.7, size:'120 MB', installs:'500M+', description:'محرر الفيديو الأشهر للمحترفين والهواة. موسيقى وتأثيرات وقوالب جاهزة.', conditions:['يحتاج 4GB رام على الأقل','مساحة تخزين فارغة 500MB','اتصال إنترنت للموسيقى والتأثيرات'], directUrl:'https://play.google.com/store/apps/details?id=com.lemon.lvoideo', downloads:850, badge:'new', featured:true },
+  ];
+}
+
+function renderApps(apps) {
+  const grid = document.getElementById('apps-grid');
+  grid.innerHTML = '';
+  if (!apps.length) {
+    grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--text-muted)">لا توجد تطبيقات في هذا التصنيف</div>`;
+    return;
+  }
+  apps.forEach(app => grid.appendChild(buildAppCard(app)));
+}
+
+function renderFeatured(apps) {
+  const list = document.getElementById('featured-list');
+  list.innerHTML = '';
+  apps.forEach(app => {
+    const c = document.createElement('div');
+    c.className = 'app-card-h';
+    c.onclick = () => openAppDetail(app);
+    c.innerHTML = `
+      <div class="app-card-icon">${renderIcon(app)}</div>
+      <div class="app-card-name">${app.name}</div>
+      <div class="app-card-dev">${app.developer}</div>
+      <div class="app-rating" style="margin-top:4px">⭐ ${app.rating||'-'}</div>`;
+    list.appendChild(c);
+  });
+}
+
+function buildAppCard(app) {
+  const c = document.createElement('div');
+  c.className = 'app-card';
+  c.onclick = () => openAppDetail(app);
+  const isFav = favorites.includes(app.id);
+  const badge = app.badge === 'new' ? '<div class="app-badge-new">جديد</div>'
+              : app.badge === 'hot' ? '<div class="app-badge-hot">🔥 رائج</div>' : '';
+  c.innerHTML = `
+    ${badge}
+    <button class="fav-btn-card" onclick="event.stopPropagation();toggleFav('${app.id}')" id="fav-card-${app.id}">${isFav?'❤️':'🤍'}</button>
+    <div class="app-card-icon">${renderIcon(app)}</div>
+    <div class="app-card-name">${app.name}</div>
+    <div class="app-card-dev">${app.developer}</div>
+    <div class="app-card-meta">
+      <span class="app-rating">⭐ ${app.rating||'-'}</span>
+      <button class="app-install-btn" onclick="event.stopPropagation();quickInstall('${app.id}')">تنزيل</button>
+    </div>`;
+  return c;
+}
+
+function renderIcon(app) {
+  if (app.icon && app.icon.startsWith('http')) {
+    return `<img src="${app.icon}" alt="${app.name}" loading="lazy" onerror="this.parentElement.textContent='📱'"/>`;
+  }
+  return app.icon || '📱';
+}
+
+function renderSkeletons() {
+  document.getElementById('apps-grid').innerHTML = Array(6).fill(`
+    <div class="app-card">
+      <div class="skeleton" style="width:56px;height:56px;border-radius:14px;margin-bottom:10px"></div>
+      <div class="skeleton" style="height:14px;width:80%;margin-bottom:6px"></div>
+      <div class="skeleton" style="height:12px;width:55%;margin-bottom:10px"></div>
+      <div class="skeleton" style="height:24px;width:100%"></div>
+    </div>`).join('');
+}
+
+// ── CATEGORY FILTER ──
+window.filterCat = function(el, cat) {
+  document.querySelectorAll('.cat-chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  currentCat = cat;
+  renderApps(cat === 'all' ? allApps : allApps.filter(a => a.category === cat));
+};
+
+// ── SEARCH ──
+const searchInput = document.getElementById('main-search');
+const searchDrop  = document.getElementById('search-dropdown');
+const spinner     = document.getElementById('search-spinner');
+
+searchInput.addEventListener('input', () => {
+  clearTimeout(searchTimer);
+  const q = searchInput.value.trim();
+  if (!q) { hideDropdown(); return; }
+  searchTimer = setTimeout(() => doSearch(q), 350);
+});
+searchInput.addEventListener('keydown', e => {
+  if (e.key === 'Enter') { e.preventDefault(); const q = searchInput.value.trim(); if (q) fullSearchPage(q); }
+});
+document.addEventListener('click', e => {
+  if (!e.target.closest('.header-search-wrap')) hideDropdown();
+});
+
+async function doSearch(q) {
+  spinner.style.display = 'block';
+  document.querySelector('.search-icon').style.display = 'none';
+  const local = localSearch(q);
+  if (local.length) renderDropdown(local, q);
+  try {
+    const snap = await getDocs(query(collection(db,'apps'), where('nameSearch','array-contains',q.toLowerCase()), limit(5)));
+    const fb = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    renderDropdown(dedupeApps([...fb,...local]).slice(0,5), q);
+  } catch(e) { renderDropdown(local, q); }
+  spinner.style.display = 'none';
+  document.querySelector('.search-icon').style.display = 'block';
+  try { await setDoc(doc(db,'searchLogs',q.toLowerCase().trim()), { term:q, count:increment(1), lastSearched:serverTimestamp() }, { merge:true }); } catch(e){}
+}
+
+function localSearch(q) {
+  const ql = q.toLowerCase();
+  return allApps.filter(a => a.name?.toLowerCase().includes(ql) || a.developer?.toLowerCase().includes(ql) || a.category?.toLowerCase().includes(ql)).slice(0,5);
+}
+
+function dedupeApps(apps) {
+  const seen = new Set();
+  return apps.filter(a => { if (seen.has(a.id)) return false; seen.add(a.id); return true; });
+}
+
+function renderDropdown(apps, q) {
+  if (!apps.length) {
+    searchDrop.innerHTML = `<div style="padding:16px;text-align:center;color:var(--text-muted);font-size:14px">لا توجد نتائج 🔍</div>`;
+  } else {
+    searchDrop.innerHTML = `<div class="search-section-title">نتائج البحث</div>` + apps.map(a => `
+      <div class="search-result-item" onclick="selectSearchResult('${a.id}')">
+        <div class="search-result-icon">${renderIcon(a)}</div>
+        <div class="search-result-info">
+          <div class="search-result-name">${a.name}</div>
+          <div class="search-result-dev">${a.developer}</div>
+        </div>
+        <div class="search-result-rating">⭐ ${a.rating||'-'}</div>
+      </div>`).join('');
+  }
+  searchDrop.classList.add('visible');
+}
+
+window.selectSearchResult = function(id) {
+  const a = allApps.find(x => x.id === id);
+  if (a) { openAppDetail(a); hideDropdown(); searchInput.value = ''; }
+};
+
+function fullSearchPage(q) {
+  hideDropdown();
+  const res = localSearch(q);
+  document.getElementById('search-page-title').textContent = `نتائج: "${q}"`;
+  document.getElementById('search-count').textContent = `${res.length} نتيجة`;
+  const grid = document.getElementById('search-results-grid');
+  grid.innerHTML = '';
+  if (!res.length) {
+    grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--text-muted)">لا توجد نتائج لـ "${q}"</div>`;
+  } else {
+    res.forEach(a => grid.appendChild(buildAppCard(a)));
+  }
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('search-page').classList.add('active');
+}
+
+function hideDropdown() { searchDrop.classList.remove('visible'); }
+
+// ── APP DETAIL ──
+window.openAppDetail = function(appData) {
+  // الانتقال إلى صفحة التفاصيل والتنزيل الكاملة (app-page.html)
+  const slug = appData.seoSlug || (appData.packageId || appData.id || '').replace(/\./g, '-');
+  location.href = `app-page.html?app=${encodeURIComponent(slug)}`;
+};
+
+window.closeAppDetail = function() {
+  document.getElementById('app-detail-modal').classList.remove('visible');
+  document.body.style.overflow = '';
+  document.title = 'فولت تك | Volt Tech — متجر التطبيقات';
+  history.pushState({}, '', '/');
+  currentApp = null;
+};
+
+// Close modal on backdrop click
+document.getElementById('app-detail-modal').addEventListener('click', function(e) {
+  if (e.target === this) closeAppDetail();
+});
+
+function catSchemaType(cat) {
+  const m = { games:'GameApplication', social:'SocialNetworkingApplication', tools:'UtilitiesApplication', education:'EducationalApplication', health:'HealthApplication', finance:'FinanceApplication' };
+  return m[cat] || 'MobileApplication';
+}
+
+function catName(cat) {
+  const m = { games:'ألعاب', social:'تواصل', tools:'أدوات', education:'تعليم', health:'صحة', finance:'مالية' };
+  return m[cat] || cat || 'عام';
+}
+
+// ── INSTALL ──
+window.triggerInstall = function() {
+  if (!currentApp) return;
+  closeAppDetail();
+  showConditionsModal(currentApp);
+};
+
+window.quickInstall = function(id) {
+  const a = allApps.find(x => x.id === id);
+  if (a) { openAppDetail(a); }
+};
+
+function showConditionsModal(appData) {
+  document.getElementById('cond-app-name').textContent = appData.name + ' — شروط التشغيل';
+  const conds = Array.isArray(appData.conditions) ? appData.conditions
+    : (typeof appData.conditions === 'string' ? appData.conditions.split('\n').filter(Boolean)
+    : ['التطبيق مسؤوليتك الشخصية بعد التنزيل', 'تأكد من توافق جهازك مع متطلبات التطبيق']);
+  document.getElementById('conditions-list').innerHTML = conds.map((c,i) => `
+    <div class="condition-item">
+      <div class="condition-num">${i+1}</div>
+      <div class="condition-text">${c}</div>
+    </div>`).join('');
+  document.getElementById('agree-check').checked = false;
+  const btn = document.getElementById('proceed-btn');
+  btn.disabled = true; btn.classList.remove('enabled');
+  document.getElementById('conditions-modal').classList.add('visible');
+  document.body.style.overflow = 'hidden';
+  downloadUrl = appData.directUrl || appData.downloadUrl || null;
+}
+
+window.closeConditions = function() {
+  document.getElementById('conditions-modal').classList.remove('visible');
+  document.body.style.overflow = '';
+};
+window.toggleAgree = function() {
+  const cb = document.getElementById('agree-check');
+  cb.checked = !cb.checked;
+  updateProceedBtn();
+};
+window.updateProceedBtn = function() {
+  const agreed = document.getElementById('agree-check').checked;
+  const btn = document.getElementById('proceed-btn');
+  btn.disabled = !agreed;
+  btn.classList.toggle('enabled', agreed);
+};
+window.proceedDownload = function() {
+  if (!document.getElementById('agree-check').checked) return;
+  closeConditions();
+  if (downloadUrl && downloadUrl !== '#') {
+    window.open(downloadUrl, '_blank');
+    showToast('جارٍ فتح رابط التنزيل ⬇️');
+  } else {
+    showToast('❌ لا يوجد رابط تنزيل لهذا التطبيق');
+  }
+  trackDownload();
+};
+
+async function trackDownload() {
+  if (!currentApp) return;
+  try {
+    await updateDoc(doc(db,'apps',currentApp.id), { downloads: increment(1) });
+    await addDoc(collection(db,'downloadLogs'), {
+      appId: currentApp.id, appName: currentApp.name,
+      timestamp: serverTimestamp(), userId: currentUser?.uid || 'anon'
+    });
+  } catch(e) {}
+}
+
+// ── SHARE ──
+window.shareApp = function() {
+  if (!currentApp) return;
+  const slug = (currentApp.packageId || currentApp.id || '').replace(/\./g,'-');
+  const url = `${location.origin}/app/${slug}`;
+  const text = `${currentApp.name} على فولت تك — ${currentApp.description?.slice(0,80)||''}`;
+  if (navigator.share) {
+    navigator.share({ title: currentApp.name, text, url }).catch(()=>{});
+  } else {
+    navigator.clipboard.writeText(url).then(() => showToast('✅ تم نسخ الرابط'));
+  }
+};
+
+// ── FAVORITES ──
+window.toggleFav = function(id) {
+  const idx = favorites.indexOf(id);
+  if (idx === -1) {
+    favorites.push(id);
+    showToast('❤️ تمت الإضافة للمفضلة');
+  } else {
+    favorites.splice(idx, 1);
+    showToast('💔 تمت الإزالة من المفضلة');
+  }
+  localStorage.setItem('vt-favs', JSON.stringify(favorites));
+  // Update card button
+  const btn = document.getElementById(`fav-card-${id}`);
+  if (btn) btn.textContent = favorites.includes(id) ? '❤️' : '🤍';
+  updateFavBadge();
+};
+
+window.toggleFavFromDetail = function() {
+  if (!currentApp) return;
+  toggleFav(currentApp.id);
+  const isFav = favorites.includes(currentApp.id);
+  const favBtn = document.getElementById('detail-fav-btn');
+  favBtn.textContent = isFav ? '❤️ في المفضلة' : '🤍 المفضلة';
+  favBtn.classList.toggle('active', isFav);
+};
+
+function updateFavBadge() {
+  const navFav = document.querySelector('[data-nav="fav"] .nav-label');
+  if (navFav) navFav.textContent = favorites.length ? `المفضلة (${favorites.length})` : 'المفضلة';
+}
+
+window.renderFavPage = function() {
+  const content = document.getElementById('fav-content');
+  const favApps = allApps.filter(a => favorites.includes(a.id));
+  if (!favApps.length) {
+    content.innerHTML = `
+      <div class="fav-empty">
+        <div class="fav-empty-icon">🤍</div>
+        <div class="fav-empty-title">لا توجد تطبيقات في المفضلة</div>
+        <div class="fav-empty-sub">اضغط على أيقونة القلب في أي تطبيق لإضافته هنا</div>
+      </div>`;
+  } else {
+    content.innerHTML = '';
+    const grid = document.createElement('div');
+    grid.className = 'apps-grid';
+    grid.style.padding = '0 16px';
+    favApps.forEach(a => grid.appendChild(buildAppCard(a)));
+    content.appendChild(grid);
+  }
+};
+
+// ── PROFILE ──
+window.renderProfilePage = function() {
+  const content = document.getElementById('profile-content');
+  if (!currentUser) {
+    content.innerHTML = `
+      <div class="login-cta">
+        <div class="login-cta-icon">👤</div>
+        <div class="login-cta-title">سجّل دخولك</div>
+        <div class="login-cta-sub">سجّل دخولك لحفظ مفضلتك ومزامنة بياناتك عبر أجهزتك</div>
+        <button class="google-signin-btn" onclick="signInWithGoogle()">
+          <svg width="20" height="20" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+          دخول بحساب Google
+        </button>
+      </div>
+      <div class="profile-section">
+        <div class="profile-section-title">إعدادات</div>
+        <div class="profile-row" onclick="toggleTheme()">
+          <div class="profile-row-left"><div class="profile-row-icon">🌙</div><div class="profile-row-label">تبديل المظهر</div></div>
+          <span class="profile-row-arrow">›</span>
+        </div>
+      </div>`;
+  } else {
+    const favCount = favorites.length;
+    const initial = (currentUser.displayName || currentUser.email || 'U')[0].toUpperCase();
+    content.innerHTML = `
+      <div class="profile-card">
+        <div class="profile-avatar">
+          ${currentUser.photoURL ? `<img src="${currentUser.photoURL}" alt="صورة الملف الشخصي"/>` : initial}
+        </div>
+        <div class="profile-name">${currentUser.displayName || 'مستخدم'}</div>
+        <div class="profile-email">${currentUser.email || ''}</div>
+        <div class="profile-stats">
+          <div class="profile-stat"><div class="profile-stat-val">${favCount}</div><div class="profile-stat-lbl">في المفضلة</div></div>
+          <div class="profile-stat"><div class="profile-stat-val">${allApps.length}</div><div class="profile-stat-lbl">تطبيق متاح</div></div>
+        </div>
+      </div>
+      <div class="profile-section">
+        <div class="profile-section-title">الحساب</div>
+        <div class="profile-row" onclick="navTo(document.querySelector('[data-nav=fav]'),'fav-page');renderFavPage()">
+          <div class="profile-row-left"><div class="profile-row-icon">❤️</div><div class="profile-row-label">تطبيقاتي المفضلة</div></div>
+          <span class="profile-row-arrow">›</span>
+        </div>
+        <div class="profile-row" onclick="signOutUser()">
+          <div class="profile-row-left"><div class="profile-row-icon">🚪</div><div class="profile-row-label" style="color:var(--danger)">تسجيل الخروج</div></div>
+          <span class="profile-row-arrow">›</span>
+        </div>
+      </div>
+      <div class="profile-section">
+        <div class="profile-section-title">إعدادات</div>
+        <div class="profile-row" onclick="toggleTheme()">
+          <div class="profile-row-left"><div class="profile-row-icon">🌙</div><div class="profile-row-label">تبديل المظهر</div></div>
+          <span class="profile-row-arrow">›</span>
+        </div>
+      </div>`;
+  }
+};
+
+window.signInWithGoogle = async function() {
+  // التحقق من إعداد التسجيل قبل السماح بحسابات جديدة
+  try {
+    const regSnap = await getDoc(doc(db, 'settings', 'registration'));
+    const isOpen = regSnap.exists() ? (regSnap.data().open !== false) : true;
+    if (!isOpen) {
+      showToast('🔒 التسجيل مغلق حالياً. تواصل مع الإدارة.');
+      return;
+    }
+  } catch(e) { /* اسمح إذا فشل التحقق */ }
+  try {
+    const cred = await signInWithPopup(auth, gProvider);
+    currentUser = cred.user;
+    localStorage.setItem('vt-uid', cred.user.uid);
+    // حفظ المستخدم في Firestore users collection
+    try {
+      await setDoc(doc(db, 'users', cred.user.uid), {
+        email: cred.user.email || '',
+        name: cred.user.displayName || '',
+        photoURL: cred.user.photoURL || '',
+        lastSeen: serverTimestamp(),
+        favorites: JSON.parse(localStorage.getItem('vt-favs') || '[]'),
+      }, { merge: true });
+      // تسجيل تاريخ الإنشاء إن كان حساباً جديداً
+      const userSnap = await getDoc(doc(db, 'users', cred.user.uid));
+      if (!userSnap.data()?.createdAt) {
+        await setDoc(doc(db, 'users', cred.user.uid), { createdAt: serverTimestamp() }, { merge: true });
+      }
+    } catch(e2) {}
+    showToast(`✅ أهلاً ${cred.user.displayName || ''}!`);
+    renderProfilePage();
+  } catch(e) {
+    showToast('❌ فشل تسجيل الدخول');
+  }
+};
+
+window.signOutUser = async function() {
+  await signOut(auth);
+  currentUser = null;
+  localStorage.removeItem('vt-uid');
+  showToast('تم تسجيل الخروج');
+  renderProfilePage();
+};
+
+onAuthStateChanged(auth, user => {
+  currentUser = user;
+  if (user) localStorage.setItem('vt-uid', user.uid);
+  else localStorage.removeItem('vt-uid');
+});
+
+// ── TOAST ──
+let toastTimer;
+window.showToast = function(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 3000);
+};
+
+// ── HANDLE BACK BUTTON ──
+window.addEventListener('popstate', () => {
+  if (document.getElementById('app-detail-modal').classList.contains('visible')) {
+    document.getElementById('app-detail-modal').classList.remove('visible');
+    document.body.style.overflow = '';
+    document.title = 'فولت تك | Volt Tech — متجر التطبيقات';
+    currentApp = null;
+  }
+});
+
+// ── INIT ──
+loadApps();
+checkAdSchedule();
+updateFavBadge();
+
+// PWA
+let deferredPrompt;
+window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); deferredPrompt = e; });
+</script>
+</body>
+</html>
