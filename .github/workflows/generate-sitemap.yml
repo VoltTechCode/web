@@ -1,40 +1,23 @@
-name: تحديث sitemap.xml تلقائيًا
+رسالة الخطأ **نفسها بالحرف** يعني إن المشكلة معندهاش علاقة بالكود خالص — الملف الفعلي المحفوظ في GitHub Secret فيه بس حرف `{` وخلاص، باقي المحتوى مش موجود. يعني وقت النسخ واللصق، جزء كبير من الملف ضاع ولا اتلصقش.
 
-on:
-  schedule:
-    - cron: "0 3 * * *"   # كل يوم الساعة 3 صباحًا UTC — غيّرها براحتك
-  workflow_dispatch:        # يسمح بتشغيله يدويًا من تبويب Actions في GitHub
+## خلينا نتأكد بالظبط بالأرقام (بدون ما نكشف أي محتوى حساس)
 
-permissions:
-  contents: write
+ضفت خطوة تشخيص في ملف الأكشن هتقولنا حجم الملف الحقيقي المحفوظ (عدد الحروف والسطور) بدون ما تعرض أي جزء من السر نفسه:## اللي تعمله دلوقتي:
 
-jobs:
-  update-sitemap:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
+1. حدّث ملف `.github/workflows/generate-sitemap.yml` بالمحتوى الجديد ده (نفس طريقة التعديل اللي عملتها قبل كده)
+2. شغّل الـ workflow تاني (Run workflow)
+3. دخل على خطوة اسمها **"Debug key file size"** وابعت لي اللي هيظهر فيها (هيكون شكله كده: "عدد الحروف: XXXX" و"عدد السطور: XX")
 
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
+ملف Firebase الأصلي المفروض يكون فيه **حوالي 2300-2500 حرف** و**تقريبًا 13 سطر**. لو اللي ظهر عندك رقم صغير جدًا (زي 1 أو 2)، يبقى أكدنا إن المشكلة في عملية اللصق نفسها في خانة الـ Secret.
 
-      - name: Install dependencies
-        run: pip install firebase-admin
+## في نفس الوقت، أنصحك تعمل الخطوة دي من الأول بحذر أكتر (علشان نوفر وقت):
 
-      - name: Write service account key from secret
-        env:
-          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
-        run: printf '%s' "$FIREBASE_SERVICE_ACCOUNT" > serviceAccountKey.json
+1. روح GitHub → Settings → Secrets and variables → Actions
+2. دوس على `FIREBASE_SERVICE_ACCOUNT` → **Update**
+3. امسح اللي في خانة Secret بالكامل
+4. افتح ملف الـ JSON بتاع Firebase تاني، ودوس **Ctrl+A** (تحديد الكل) ثم **Ctrl+C** (نسخ)
+5. رجّع لخانة Secret في GitHub، دوس جواها، **Ctrl+A** (تحديد أي حاجة موجودة) ثم **Ctrl+V** (لصق)
+6. قبل ما تدوس Update، اتأكد إنك شايف نص كتير جوه الخانة مش بس سطر أو اتنين — لو الخانة صغيرة استخدم عجلة الماوس أو السكرول جواها للتأكد
+7. **Update secret**
 
-      - name: Generate sitemap.xml
-        run: python generate_sitemap.py
-
-      - name: Commit and push if changed
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add sitemap.xml
-          git diff --staged --quiet || git commit -m "تحديث sitemap.xml تلقائيًا"
-          git push
+بعد كده جرّب Run workflow تاني وقولي النتيجة.
