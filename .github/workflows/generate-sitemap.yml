@@ -24,7 +24,9 @@ jobs:
         run: pip install firebase-admin
 
       - name: Write service account key from secret
-        run: echo "${{ secrets.FIREBASE_SERVICE_ACCOUNT }}" > serviceAccountKey.json
+        env:
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+        run: printf '%s' "$FIREBASE_SERVICE_ACCOUNT" > serviceAccountKey.json
 
       - name: Generate sitemap.xml
         run: python generate_sitemap.py
