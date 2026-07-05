@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://volttechcode.github.io/web/</loc>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <!--
+    ملاحظة مهمة:
+    صفحات التطبيقات الفردية (app-page.html?app=slug) بياناتها ديناميكية من Firestore
+    ولا يمكن معرفتها مسبقًا وقت كتابة هذا الملف.
+    استخدم السكريبت المرفق "generate_sitemap.py" لإضافتها تلقائيًا من قاعدة بياناتك،
+    وأعد تشغيله كل مرة تضيف/تحذف تطبيقًا (أو من خلال بوت التليجرام الخاص بك).
+  -->
+</urlset>

@@ -5,12 +5,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
   <meta name="theme-color" content="#0f0f13"/>
   <meta name="description" content="فولت تك - متجر التطبيقات المتقدم. اكتشف وحمّل أفضل التطبيقات مجاناً."/>
+  <meta name="robots" content="index, follow"/>
+  <link rel="canonical" href="https://volttechcode.github.io/web/"/>
   <meta property="og:title" content="فولت تك | Volt Tech"/>
   <meta property="og:description" content="متجر التطبيقات المتقدم — اكتشف وحمّل أفضل التطبيقات"/>
   <meta property="og:type" content="website"/>
-  <link rel="manifest" href="/manifest.json"/>
-  <link rel="apple-touch-icon" href="/icons/icon-192.png"/>
+  <meta property="og:url" content="https://volttechcode.github.io/web/"/>
+  <meta property="og:image" content="https://volttechcode.github.io/web/icons/icon-192.png"/>
+  <link rel="manifest" href="manifest.json"/>
+  <link rel="apple-touch-icon" href="icons/icon-192.png"/>
   <title>فولت تك | Volt Tech — متجر التطبيقات</title>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "فولت تك | Volt Tech",
+    "url": "https://volttechcode.github.io/web/",
+    "description": "فولت تك - متجر التطبيقات المتقدم. اكتشف وحمّل أفضل التطبيقات مجاناً.",
+    "inLanguage": "ar"
+  }
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
@@ -311,7 +325,7 @@
   <div id="home-page" class="page active">
     <div class="hero-banner">
       <div class="hero-badge">⚡ المتجر المتقدم</div>
-      <div class="hero-title">اكتشف التطبيقات<br/><span>الأفضل لك</span></div>
+      <h1 class="hero-title">اكتشف التطبيقات<br/><span>الأفضل لك</span></h1>
       <div class="hero-sub">آلاف التطبيقات المختارة بعناية مع شروط تشغيل واضحة وتجربة تنزيل سلسة.</div>
       <div class="hero-stats">
         <div class="hero-stat"><div class="hero-stat-num" id="stat-apps">+0</div><div class="hero-stat-label">تطبيق</div></div>
@@ -319,7 +333,7 @@
         <div class="hero-stat"><div class="hero-stat-num">100%</div><div class="hero-stat-label">موثوق</div></div>
       </div>
     </div>
-    <div class="section-head"><div class="section-title">التصنيفات</div></div>
+    <div class="section-head"><h2 class="section-title">التصنيفات</h2></div>
     <div class="cats-scroll" id="cats-scroll">
       <div class="cat-chip active" data-cat="all" onclick="filterCat(this,'all')"><span>🌐</span> الكل</div>
       <div class="cat-chip" data-cat="games" onclick="filterCat(this,'games')"><span>🎮</span> ألعاب</div>
@@ -330,11 +344,11 @@
       <div class="cat-chip" data-cat="finance" onclick="filterCat(this,'finance')"><span>💰</span> مالية</div>
     </div>
     <div class="section-head">
-      <div class="section-title">مميز اليوم</div>
+      <h2 class="section-title">مميز اليوم</h2>
     </div>
     <div class="apps-list-h" id="featured-list"></div>
     <div class="section-head">
-      <div class="section-title">جميع التطبيقات</div>
+      <h2 class="section-title">جميع التطبيقات</h2>
     </div>
     <div class="apps-grid" id="apps-grid"></div>
     <div style="height:16px"></div>
@@ -343,7 +357,7 @@
   <!-- SEARCH RESULTS -->
   <div id="search-page" class="page">
     <div style="padding:16px 16px 8px">
-      <div class="section-title" id="search-page-title">نتائج البحث</div>
+      <h2 class="section-title" id="search-page-title">نتائج البحث</h2>
       <div style="font-size:13px;color:var(--text-muted);margin-top:4px" id="search-count"></div>
     </div>
     <div class="apps-grid" id="search-results-grid" style="padding:0 16px"></div>
@@ -352,13 +366,13 @@
 
   <!-- FAVORITES -->
   <div id="fav-page" class="page">
-    <div class="section-head"><div class="section-title">❤️ المفضلة</div></div>
+    <div class="section-head"><h2 class="section-title">❤️ المفضلة</h2></div>
     <div id="fav-content"></div>
   </div>
 
   <!-- PROFILE -->
   <div id="profile-page" class="page">
-    <div class="section-head"><div class="section-title">👤 حسابي</div></div>
+    <div class="section-head"><h2 class="section-title">👤 حسابي</h2></div>
     <div id="profile-content"></div>
   </div>
 
@@ -808,7 +822,7 @@ window.closeAppDetail = function() {
   document.getElementById('app-detail-modal').classList.remove('visible');
   document.body.style.overflow = '';
   document.title = 'فولت تك | Volt Tech — متجر التطبيقات';
-  history.pushState({}, '', '/');
+  history.pushState({}, '', location.pathname);
   currentApp = null;
 };
 
@@ -898,8 +912,8 @@ async function trackDownload() {
 // ── SHARE ──
 window.shareApp = function() {
   if (!currentApp) return;
-  const slug = (currentApp.packageId || currentApp.id || '').replace(/\./g,'-');
-  const url = `${location.origin}/app/${slug}`;
+  const slug = currentApp.seoSlug || (currentApp.packageId || currentApp.id || '').replace(/\./g,'-');
+  const url = `${location.origin}${location.pathname.replace(/index\.html$/, '')}app-page.html?app=${encodeURIComponent(slug)}`;
   const text = `${currentApp.name} على فولت تك — ${currentApp.description?.slice(0,80)||''}`;
   if (navigator.share) {
     navigator.share({ title: currentApp.name, text, url }).catch(()=>{});

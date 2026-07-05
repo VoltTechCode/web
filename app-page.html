@@ -5,10 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
   <!-- ═══ SEO — تُملأ ديناميكياً من Firebase ═══ -->
-  <title id="meta-title">جارٍ التحميل... | فولت تك</title>
-  <meta name="description"        id="meta-desc"     content=""/>
-  <meta name="keywords"           id="meta-keywords"  content=""/>
-  <meta name="robots"             content="index, follow"/>
+  <title id="meta-title">تفاصيل التطبيق | فولت تك</title>
+  <meta name="description"        id="meta-desc"     content="تصفح تفاصيل التطبيق وتنزيله مباشرة من متجر فولت تك."/>
+  <meta name="keywords"           id="meta-keywords"  content="فولت تك, تنزيل تطبيقات أندرويد"/>
+  <meta name="robots"             id="meta-robots"    content="index, follow"/>
   <link rel="canonical"           id="meta-canonical" href=""/>
 
   <!-- Open Graph -->
@@ -32,7 +32,7 @@
   <!-- Breadcrumb JSON-LD -->
   <script type="application/ld+json" id="jsonld-breadcrumb">{}</script>
 
-  <link rel="manifest" href="/manifest.json"/>
+  <link rel="manifest" href="manifest.json"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
@@ -545,6 +545,7 @@ function renderApp() {
   setMeta('meta-desc',     seoDesc,     'content');
   setMeta('meta-keywords', `${a.name}, ${a.developer}, تنزيل ${a.name}, ${a.name} أندرويد, ${a.category||''}`, 'content');
   setMeta('meta-canonical', pageUrl, 'href');
+  setMeta('meta-robots',    'index, follow');
   setMeta('og-title',      seoTitle);
   setMeta('og-desc',       seoDesc);
   setMeta('og-image',      a.headerImage || a.icon || '');
@@ -891,6 +892,8 @@ function showNotFound() {
   document.getElementById('loading-state').style.display  = 'none';
   document.getElementById('not-found-state').style.display = 'block';
   document.title = 'التطبيق غير موجود | فولت تك';
+  const robotsTag = document.getElementById('meta-robots');
+  if (robotsTag) robotsTag.setAttribute('content', 'noindex, follow');
 }
 
 /* ═══ TOAST ═══ */
