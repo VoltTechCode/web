@@ -67,6 +67,9 @@ button{font-family:inherit}
 .brand-mark::before{left:6px}.brand-mark::after{right:6px}
 .brand-name{font:900 17px var(--disp);letter-spacing:.2px}
 .brand-name b{color:var(--ember)}
+.brand-tag{font:800 8px var(--mono);color:var(--cyan);background:var(--cyan-soft);border:1px solid rgba(43,224,200,.3);border-radius:3px;padding:2px 5px;letter-spacing:.5px;margin-inline-start:2px;flex-shrink:0}
+.tg-btn{background:#229ED9!important;color:#fff!important;border-color:#229ED9!important}
+.tg-btn:hover{background:#1b8ec4!important;border-color:#1b8ec4!important}
 .search-shell{flex:1;position:relative}
 #q{width:100%;height:38px;background:var(--panel);border:1px solid var(--line);border-radius:var(--r1);padding:0 14px 0 40px;font-family:var(--body);font-size:14px;color:var(--ink);outline:none;direction:rtl;transition:border-color var(--tr)}
 #q:focus{border-color:var(--ember)}
@@ -141,6 +144,7 @@ button{font-family:inherit}
 .mod-badge{position:absolute;top:10px;left:10px;font:700 9px var(--mono);padding:3px 7px;border-radius:3px;letter-spacing:.5px;text-transform:uppercase;z-index:2}
 .mod-badge.hot{background:rgba(239,83,97,.15);color:var(--bad)}
 .mod-badge.new{background:var(--cyan-soft);color:var(--cyan)}
+.mod-modtag{position:absolute;top:10px;right:10px;font:800 8px var(--mono);color:var(--cyan);background:var(--cyan-soft);border:1px solid rgba(43,224,200,.3);border-radius:3px;padding:2px 6px;letter-spacing:.5px;z-index:2}
 .mod-fav{position:absolute;top:8px;left:8px;width:28px;height:28px;background:var(--bg2);border:1px solid var(--line);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;cursor:pointer;z-index:2}
 .mod-icon{width:52px;height:52px;border-radius:var(--r1);margin-bottom:10px;background:var(--ember-soft);display:flex;align-items:center;justify-content:center;font-size:24px;overflow:hidden}
 .mod-icon img{width:100%;height:100%;object-fit:cover;border-radius:var(--r1)}
@@ -242,6 +246,7 @@ button{font-family:inherit}
   <a href="#" class="brand" onclick="goHome(event)">
     <div class="brand-mark">X</div>
     <div class="brand-name">Modium<b>X</b></div>
+    <span class="brand-tag" title="نسخ معدّلة/مكركة لأغراض تجريبية">MOD</span>
   </a>
   <div class="search-shell">
     <span class="q-icon">◎</span>
@@ -250,6 +255,7 @@ button{font-family:inherit}
     <div id="q-drop"></div>
   </div>
   <div class="head-actions">
+    <button class="hbtn tg-btn" onclick="window.open('https://t.me/ModiumX','_blank')" title="قناتنا على تيليجرام">✈</button>
     <button class="hbtn" onclick="toggleTheme()" id="theme-btn">◐</button>
   </div>
 </header>
@@ -332,6 +338,7 @@ button{font-family:inherit}
       <label>أقر بأنني قرأت جميع شروط التشغيل وأوافق عليها، وأتحمل كامل المسؤولية عن تشغيل الوحدة وفق هذه الشروط.</label>
     </div>
     <button class="cond-go" id="cond-go" onclick="proceedDL()" disabled>متابعة التنزيل ↓</button>
+    <button class="cond-go tg-btn" style="margin-top:8px;opacity:1;cursor:pointer" onclick="window.open('https://t.me/ModiumX','_blank')">✈ انضم لقناتنا على تيليجرام</button>
   </div>
 </div>
 
@@ -476,6 +483,27 @@ function getDemoApps(){
   ];
 }
 
+// ── فتح الصفحة على تطبيقات مطوّر معيّن أو تصنيف معيّن عبر رابط ?dev= أو ?cat= ──
+function applyUrlParams(){
+  const params = new URLSearchParams(location.search);
+  const dev = params.get('dev');
+  const cat = params.get('cat');
+  if (dev) {
+    const devN = dev.trim().toLowerCase();
+    const res = allApps.filter(a => (a.developer||'').trim().toLowerCase() === devN);
+    document.getElementById('search-title').textContent = `تطبيقات المطوّر: ${dev}`;
+    document.getElementById('search-count').textContent = `${res.length} تطبيق`;
+    const grid = document.getElementById('search-grid');
+    grid.innerHTML = '';
+    if (!res.length) grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--ink-faint)">لا توجد تطبيقات أخرى لهذا المطوّر حالياً</div>`;
+    else res.forEach(a=>grid.appendChild(buildCard(a)));
+    navTo(null,'search-pg');
+  } else if (cat) {
+    const chip = document.querySelector(`.chip[data-cat="${cat}"]`);
+    if (chip) filterCat(chip, cat);
+  }
+}
+
 function renderGrid(apps) {
   const grid = document.getElementById('apps-grid');
   grid.innerHTML = '';
@@ -503,6 +531,7 @@ function buildCard(app) {
   const badge = app.badge === 'new' ? '<div class="mod-badge new">جديد</div>' : app.badge === 'hot' ? '<div class="mod-badge hot">رائج</div>' : '';
   c.innerHTML = `
     ${badge}
+    <div class="mod-modtag" title="نسخة معدّلة/مكركة">MOD</div>
     <button class="mod-fav" onclick="event.stopPropagation();toggleFav('${app.id}')" id="fav-${app.id}">${isFav?'♥':'♡'}</button>
     <div class="mod-icon">${iconHtml(app)}</div>
     <div class="mod-name">${app.name}</div>
@@ -559,7 +588,7 @@ async function doSearch(q){
   qSpin.style.display='block';
   document.querySelector('.q-icon').style.display='none';
   const local = localSearch(q);
-  if (local.length) renderDrop(local, q);
+  if (local.length) renderDrop(local.slice(0,5), q);
   try {
     const snap = await getDocs(query(collection(db,'apps'), where('nameSearch','array-contains', q.toLowerCase()), limit(5)));
     const fb = snap.docs.map(d=>({id:d.id, ...d.data()}));
@@ -570,9 +599,35 @@ async function doSearch(q){
   try { await setDoc(doc(db,'searchLogs', q.toLowerCase().trim()), { term:q, count:increment(1), lastSearched:serverTimestamp() }, { merge:true }); } catch(e){}
 }
 
+const AR_STOP = new Set(['من','في','على','الى','إلى','عن','مع','هو','هي','او','أو','لا','ما','لكن','و','ثم','قد','كل','هذا','هذه','ذلك','التي','الذي','يمكن','بين','عبر','او','ايضا','أيضاً']);
+function tokenize(s){
+  return (s||'').toLowerCase().split(/[\s,،.!؟\-_/\\|:;"'()«»]+/).map(w=>w.trim()).filter(w=>w.length>1 && !AR_STOP.has(w));
+}
+// بحث ذكي: يطابق اسم التطبيق مباشرة، ويستفيد أيضاً من كلمات الوصف والمطوّر والتصنيف
 function localSearch(q){
-  const ql = q.toLowerCase();
-  return allApps.filter(a => a.name?.toLowerCase().includes(ql) || a.developer?.toLowerCase().includes(ql) || a.category?.toLowerCase().includes(ql)).slice(0,5);
+  const ql = (q||'').toLowerCase().trim();
+  if (!ql) return [];
+  const qWords = tokenize(ql);
+  const scored = allApps.map(app=>{
+    const name = (app.name||'').toLowerCase();
+    const dev  = (app.developer||'').toLowerCase();
+    const cat  = (app.category||'').toLowerCase();
+    const desc = (app.description||'').toLowerCase();
+    let score = 0;
+    if (name === ql) score += 100;
+    else if (name.includes(ql)) score += 55;
+    if (dev.includes(ql)) score += 18;
+    if (cat.includes(ql)) score += 8;
+    if (desc.includes(ql)) score += 22;
+    qWords.forEach(w=>{
+      if (name.includes(w)) score += 10;
+      if (dev.includes(w)) score += 4;
+      if (desc.includes(w)) score += 6;
+    });
+    return { app, score };
+  }).filter(x=>x.score>0);
+  scored.sort((a,b)=>b.score-a.score);
+  return scored.slice(0,15).map(x=>x.app);
 }
 function dedupe(apps){ const seen=new Set(); return apps.filter(a=>{ if (seen.has(a.id)) return false; seen.add(a.id); return true; }); }
 
@@ -763,7 +818,7 @@ window.showToast = function(msg){
 };
 
 // ── INIT ──
-loadApps();
+loadApps().then(()=> applyUrlParams());
 checkAdSchedule();
 updateFavTab();
 

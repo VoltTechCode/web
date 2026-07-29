@@ -47,6 +47,13 @@
   --disp:'Tajawal',system-ui,sans-serif; --body:'IBM Plex Sans Arabic',system-ui,sans-serif; --mono:'JetBrains Mono',monospace;
   --max:920px; --shadow:0 10px 40px rgba(0,0,0,.5); --tr:.18s cubic-bezier(.4,0,.2,1);
 }
+[data-theme="light"]{
+  --bg:#f3f3f7; --bg2:#ffffff; --panel:#ffffff; --panel-hi:#f0f0f6;
+  --line:rgba(10,11,20,.08); --line2:rgba(10,11,20,.15);
+  --ink:#12131c; --ink-dim:#5a5d72; --ink-faint:#9b9eb2;
+  --ember-soft:rgba(255,106,61,.1); --cyan-soft:rgba(43,224,200,.1);
+  --shadow:0 10px 30px rgba(20,20,40,.1);
+}
 html{scroll-behavior:smooth}
 body{font-family:var(--body);background:var(--bg);color:var(--ink);min-height:100dvh;overflow-x:hidden;-webkit-font-smoothing:antialiased;
   background-image:radial-gradient(circle at 1px 1px, var(--line) 1px, transparent 0); background-size:26px 26px;}
@@ -62,8 +69,14 @@ img{display:block}
 .brand-mark::before{left:5px}.brand-mark::after{right:5px}
 .brand-name{font:900 16px var(--disp)}
 .brand-name b{color:var(--ember)}
+.brand-tag{font:800 8px var(--mono);color:var(--cyan);background:var(--cyan-soft);border:1px solid rgba(43,224,200,.3);border-radius:3px;padding:2px 5px;letter-spacing:.5px;margin-inline-start:2px;flex-shrink:0}
 .back-link{display:flex;align-items:center;gap:6px;font:700 13px var(--mono);color:var(--ink-dim);background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:7px 14px;transition:all var(--tr)}
 .back-link:hover{color:var(--ink);border-color:var(--line2)}
+.head-actions{display:flex;gap:8px;align-items:center}
+.hbtn{width:34px;height:34px;background:var(--panel);border:1px solid var(--line);border-radius:var(--r1);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--ink-dim);font-size:15px;transition:all var(--tr)}
+.hbtn:hover{color:var(--ink);border-color:var(--line2)}
+.tg-btn{background:#229ED9!important;color:#fff!important;border-color:#229ED9!important}
+.tg-btn:hover{background:#1b8ec4!important;border-color:#1b8ec4!important}
 
 /* ── BREADCRUMB ── */
 .bc{max-width:var(--max);margin:0 auto;padding:12px 18px;display:flex;gap:6px;align-items:center;font:600 11px var(--mono);color:var(--ink-faint);flex-wrap:wrap}
@@ -79,6 +92,7 @@ img{display:block}
 .hero-icon{width:92px;height:92px;border-radius:var(--r2);background:var(--ember-soft);border:1px solid var(--line2);overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:38px}
 .hero-icon img{width:100%;height:100%;object-fit:cover}
 .badge-wrap{position:absolute;bottom:-6px;left:-6px;background:var(--ember);border-radius:6px;width:24px;height:24px;display:flex;align-items:center;justify-content:center;font-size:11px;border:2px solid var(--bg)}
+.mod-ribbon{position:absolute;top:-6px;right:-6px;font:800 9px var(--mono);color:var(--cyan);background:var(--cyan-soft);border:1px solid rgba(43,224,200,.35);border-radius:5px;padding:3px 6px;letter-spacing:.5px;z-index:2}
 .hero-info{flex:1;min-width:0}
 .hero-eyebrow{font:700 10px var(--mono);color:var(--ember);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px}
 .hero-name{font:900 24px/1.25 var(--disp);margin-bottom:4px}
@@ -180,7 +194,12 @@ img{display:block}
 #lightbox{position:fixed;inset:0;z-index:300;background:rgba(0,0,0,.92);backdrop-filter:blur(10px);display:none;align-items:center;justify-content:center;padding:20px}
 #lightbox.open{display:flex}
 #lightbox img{max-width:100%;max-height:90dvh;border-radius:var(--r2);object-fit:contain}
-#lb-close{position:absolute;top:20px;left:20px;width:38px;height:38px;background:rgba(255,255,255,.1);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;color:#fff}
+#lb-close{position:absolute;top:20px;left:20px;width:38px;height:38px;background:rgba(255,255,255,.1);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;color:#fff;z-index:2}
+.lb-nav{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;background:rgba(255,255,255,.1);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:20px;color:#fff;z-index:2;transition:background .15s}
+.lb-nav:hover{background:rgba(255,255,255,.2)}
+#lb-prev{left:16px}
+#lb-next{right:16px}
+.lb-counter{position:absolute;bottom:18px;left:50%;transform:translateX(-50%);font:600 12px var(--mono);color:rgba(255,255,255,.7);z-index:2}
 
 /* conditions modal */
 #cond-modal{position:fixed;inset:0;z-index:300;display:none;align-items:flex-end;background:rgba(0,0,0,.6);backdrop-filter:blur(4px)}
@@ -224,8 +243,13 @@ img{display:block}
   <a href="index.html" class="brand" aria-label="ModiumX الرئيسية">
     <div class="brand-mark">X</div>
     <div class="brand-name">Modium<b>X</b></div>
+    <span class="brand-tag" title="نسخ معدّلة/مكركة لأغراض تجريبية">MOD</span>
   </a>
-  <a href="index.html" class="back-link"><span>→</span> الرئيسية</a>
+  <div class="head-actions">
+    <button class="hbtn tg-btn" onclick="window.open('https://t.me/ModiumX','_blank')" title="قناتنا على تيليجرام">✈</button>
+    <button class="hbtn" onclick="toggleTheme()" id="theme-btn">◐</button>
+    <a href="index.html" class="back-link"><span>→</span> الرئيسية</a>
+  </div>
 </header>
 
 <nav class="bc" aria-label="مسار التنقل" id="bc-nav">
@@ -255,6 +279,7 @@ img{display:block}
 
     <div class="hero">
       <div class="hero-icon-wrap">
+        <div class="mod-ribbon" title="نسخة معدّلة/مكركة">MOD</div>
         <div class="hero-icon" id="app-icon">◧</div>
         <div class="badge-wrap" id="badge-wrap" style="display:none">◆</div>
       </div>
@@ -355,13 +380,17 @@ img{display:block}
       <label for="agree-cb">أقر بأنني قرأت شروط التشغيل وأوافق عليها كاملاً، وأتحمل مسؤولية تشغيل الوحدة وفقاً لهذه الشروط.</label>
     </div>
     <button class="cond-go" id="cond-proceed" disabled onclick="doDownload()">المتابعة والتنزيل ↓</button>
+    <button class="cond-go tg-btn" style="margin-top:8px;opacity:1;cursor:pointer" onclick="window.open('https://t.me/ModiumX','_blank')">✈ انضم لقناتنا على تيليجرام</button>
   </div>
 </div>
 
 <!-- LIGHTBOX -->
 <div id="lightbox" onclick="closeLightbox()">
-  <div id="lb-close" onclick="closeLightbox()">✕</div>
-  <img id="lightbox-img" src="" alt="لقطة شاشة"/>
+  <div id="lb-close" onclick="event.stopPropagation();closeLightbox()">✕</div>
+  <div id="lb-prev" class="lb-nav" onclick="event.stopPropagation();lbNav(-1)">‹</div>
+  <img id="lightbox-img" src="" alt="لقطة شاشة" onclick="event.stopPropagation()"/>
+  <div id="lb-next" class="lb-nav" onclick="event.stopPropagation();lbNav(1)">›</div>
+  <div class="lb-counter" id="lb-counter"></div>
 </div>
 
 <div class="toast" id="toast"></div>
@@ -387,6 +416,20 @@ const db    = getFirestore(fbApp);
 
 let APP=null, ALL_APPS=[], dlUrl=null;
 let favs = JSON.parse(localStorage.getItem('mx-favs') || '[]');
+
+// ── THEME (متزامن مع الصفحة الرئيسية) ──
+window.toggleTheme = function() {
+  const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+  document.documentElement.setAttribute('data-theme', isLight ? '' : 'light');
+  document.getElementById('theme-btn').textContent = isLight ? '◐' : '◑';
+  localStorage.setItem('mx-theme', isLight ? 'dark' : 'light');
+};
+(function(){
+  if (localStorage.getItem('mx-theme') === 'light') {
+    document.documentElement.setAttribute('data-theme','light');
+    document.getElementById('theme-btn').textContent = '◑';
+  }
+})();
 
 function getSlugFromUrl(){
   const path = location.pathname;
@@ -466,7 +509,7 @@ function renderApp(){
     "@context":"https://schema.org","@type":"BreadcrumbList",
     "itemListElement":[
       {"@type":"ListItem","position":1,"name":"ModiumX","item":location.origin},
-      {"@type":"ListItem","position":2,"name":catAr(a.category),"item":`${location.origin}/?cat=${a.category}`},
+      {"@type":"ListItem","position":2,"name":catAr(a.category),"item":`${location.origin}${location.pathname.replace(/[^/]*$/,'')}index.html?cat=${a.category}`},
       {"@type":"ListItem","position":3,"name":a.name,"item":pageUrl}
     ]
   });
@@ -478,7 +521,8 @@ function renderApp(){
   setText('app-name', a.name);
   const devEl = document.getElementById('app-dev');
   devEl.textContent = a.developer;
-  devEl.href = `/?dev=${encodeURIComponent(a.developer)}`;
+  devEl.href = `index.html?dev=${encodeURIComponent(a.developer)}`;
+  devEl.title = `عرض كل تطبيقات ${a.developer}`;
 
   const tags = [];
   tags.push(`<span class="tag">${catAr(a.category)}</span>`);
@@ -524,7 +568,7 @@ function renderApp(){
   if (a.screenshots?.length) {
     document.getElementById('sec-shots').style.display='block';
     document.getElementById('shots-list').innerHTML = a.screenshots.map((s,i)=>
-      `<img class="shot" src="${s}" alt="لقطة شاشة ${a.name} ${i+1}" loading="lazy" onclick="openLightbox('${s}')"/>`
+      `<img class="shot" src="${s}" alt="لقطة شاشة ${a.name} ${i+1}" loading="lazy" onclick="openLightbox(${i})"/>`
     ).join('');
   }
 
@@ -584,7 +628,7 @@ function renderApp(){
       </div>`).join('');
   }
 
-  const similar = ALL_APPS.filter(x=>x.id!==a.id && x.category===a.category).slice(0,8);
+  const similar = findSimilarApps(a, ALL_APPS).slice(0,8);
   if (similar.length) {
     document.getElementById('sec-similar').style.display='block';
     document.getElementById('similar-grid').innerHTML = similar.map(x=>{
@@ -683,8 +727,20 @@ window.expandDesc = function(){
   document.getElementById('readmore-btn').style.display='none';
 };
 
-window.openLightbox = function(src){
-  document.getElementById('lightbox-img').src = src;
+let lbIndex = 0;
+function lbShots(){ return APP?.screenshots || []; }
+function renderLightbox(){
+  const shots = lbShots();
+  if (!shots.length) return;
+  document.getElementById('lightbox-img').src = shots[lbIndex];
+  document.getElementById('lb-counter').textContent = `${lbIndex+1} / ${shots.length}`;
+  const showNav = shots.length > 1;
+  document.getElementById('lb-prev').style.display = showNav ? 'flex' : 'none';
+  document.getElementById('lb-next').style.display = showNav ? 'flex' : 'none';
+}
+window.openLightbox = function(index){
+  lbIndex = index || 0;
+  renderLightbox();
   document.getElementById('lightbox').classList.add('open');
   document.body.style.overflow = 'hidden';
 };
@@ -692,6 +748,30 @@ window.closeLightbox = function(){
   document.getElementById('lightbox').classList.remove('open');
   document.body.style.overflow = '';
 };
+window.lbNav = function(dir){
+  const shots = lbShots();
+  if (!shots.length) return;
+  lbIndex = (lbIndex + dir + shots.length) % shots.length;
+  renderLightbox();
+};
+// تصفّح بالسحب باللمس مثل معرض متجر بلاي
+(function(){
+  const img = document.getElementById('lightbox-img');
+  let touchStartX = null;
+  img.addEventListener('touchstart', e=>{ touchStartX = e.touches[0].clientX; }, { passive:true });
+  img.addEventListener('touchend', e=>{
+    if (touchStartX === null) return;
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    if (Math.abs(dx) > 40) lbNav(dx > 0 ? -1 : 1);
+    touchStartX = null;
+  }, { passive:true });
+})();
+document.addEventListener('keydown', e=>{
+  if (!document.getElementById('lightbox').classList.contains('open')) return;
+  if (e.key === 'ArrowLeft') lbNav(1);
+  else if (e.key === 'ArrowRight') lbNav(-1);
+  else if (e.key === 'Escape') closeLightbox();
+});
 
 function showNotFound(){
   document.getElementById('loading-state').style.display='none';
@@ -727,6 +807,31 @@ function starsStr(r){
 }
 function catAr(cat){ const m={games:'ألعاب',social:'تواصل اجتماعي',tools:'أدوات',education:'تعليم',health:'صحة ولياقة',finance:'مالية'}; return m[cat]||cat||'عام'; }
 function catSchema(cat){ const m={games:'GameApplication',social:'SocialNetworkingApplication',tools:'UtilitiesApplication',education:'EducationalApplication',health:'HealthApplication',finance:'FinanceApplication'}; return m[cat]||'MobileApplication'; }
+const AR_STOP = new Set(['من','في','على','الى','إلى','عن','مع','هو','هي','او','أو','لا','ما','لكن','و','ثم','قد','كل','هذا','هذه','ذلك','التي','الذي','يمكن','بين','عبر','ايضا','أيضاً']);
+function tokenize(s){
+  return (s||'').toLowerCase().split(/[\s,،.!؟\-_/\\|:;"'()«»]+/).map(w=>w.trim()).filter(w=>w.length>1 && !AR_STOP.has(w));
+}
+// وحدات مشابهة: تُحسب اعتماداً على تشابه كلمات الوصف بالإضافة لنفس التصنيف/المطوّر
+function findSimilarApps(app, all){
+  const baseWords = new Set(tokenize(app.description));
+  const scored = all.filter(x=>x.id!==app.id).map(x=>{
+    let score = 0;
+    const xWords = tokenize(x.description);
+    const shared = xWords.filter(w=>baseWords.has(w)).length;
+    score += shared * 4;
+    if (x.category && x.category === app.category) score += 6;
+    if (x.developer && x.developer === app.developer) score += 3;
+    return { app:x, score };
+  }).filter(x=>x.score>0);
+  scored.sort((a,b)=>b.score-a.score);
+  if (scored.length < 4) {
+    // fallback: لو لم تُوجد وحدات كافية بالتشابه، أكمل بنفس التصنيف
+    const already = new Set(scored.map(s=>s.app.id));
+    all.filter(x=>x.id!==app.id && x.category===app.category && !already.has(x.id))
+       .forEach(x=>scored.push({app:x,score:0}));
+  }
+  return scored.map(x=>x.app);
+}
 function normConds(c){
   if (!c) return [];
   if (Array.isArray(c)) return c.filter(Boolean);
