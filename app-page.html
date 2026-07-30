@@ -117,7 +117,7 @@ img{display:block}
 .dl-row{display:flex;gap:8px;margin-bottom:8px}
 .btn-dl{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;padding:13px;background:var(--ember);color:#141014;border:none;border-radius:var(--r1);font:800 14px var(--disp);cursor:pointer;transition:background var(--tr)}
 .btn-dl:hover{background:var(--ember-hi)}
-.btn-icon{width:46px;height:46px;background:var(--panel);border:1px solid var(--line2);border-radius:var(--r1);display:flex;align-items:center;justify-content:center;font-size:17px;cursor:pointer;flex-shrink:0;transition:all var(--tr)}
+.btn-icon{width:46px;height:46px;background:var(--panel);border:1px solid var(--line2);border-radius:var(--r1);display:flex;align-items:center;justify-content:center;font-size:17px;cursor:pointer;flex-shrink:0;transition:all var(--tr);color:var(--ink)}
 .btn-icon:hover{border-color:var(--ember)}
 .btn-icon.active{color:var(--bad);border-color:var(--bad)}
 .dl-note{font-size:11px;color:var(--ink-faint);font-family:var(--mono)}
@@ -212,7 +212,7 @@ img{display:block}
 .close-x{background:none;border:none;color:var(--ink-faint);font-size:20px;cursor:pointer}
 .cond-agree{display:flex;gap:10px;align-items:flex-start;padding:14px 4px;cursor:pointer}
 .cond-agree label{font-size:12px;color:var(--ink-dim);line-height:1.6;cursor:pointer}
-.cond-agree input{margin-top:3px;accent-color:var(--ember)}
+.cond-agree input{margin-top:3px;accent-color:var(--ember);width:18px;height:18px;border:1px solid var(--line2);border-radius:3px;cursor:pointer}
 .cond-go{width:100%;padding:14px;background:var(--ink-faint);color:var(--bg);border:none;border-radius:var(--r1);font:800 14px var(--disp);cursor:not-allowed;opacity:.5}
 .cond-go.on{background:var(--ember);cursor:pointer;opacity:1}
 
@@ -234,6 +234,14 @@ img{display:block}
   .stats-grid{grid-template-columns:repeat(2,1fr)}
   .rev-score-wrap{flex-direction:column;align-items:flex-start;gap:14px}
 }
+/* ── PAGINATION (وحدات مشابهة) ── */
+.pagination{display:flex;align-items:center;justify-content:center;gap:6px;padding:18px 0 4px;flex-wrap:wrap}
+.page-btn{min-width:34px;height:34px;padding:0 8px;background:var(--panel);border:1px solid var(--line);border-radius:var(--r1);display:flex;align-items:center;justify-content:center;font:700 12px var(--mono);color:var(--ink-dim);cursor:pointer;transition:all var(--tr);user-select:none}
+.page-btn:hover{border-color:var(--line2);color:var(--ink)}
+.page-btn.on{background:var(--ember);border-color:var(--ember);color:#141014}
+.page-btn.disabled{opacity:.35;cursor:not-allowed;pointer-events:none}
+.page-dots{color:var(--ink-faint);font:700 12px var(--mono);padding:0 4px;display:flex;align-items:center}
+
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
 </style>
 </head>
@@ -349,6 +357,7 @@ img{display:block}
     <section class="sec" id="sec-similar" style="display:none">
       <h2 class="sec-t">وحدات مشابهة</h2>
       <div class="sim-grid" id="similar-grid"></div>
+      <div class="pagination" id="similar-pagination"></div>
     </section>
 
   </div>
@@ -375,9 +384,9 @@ img{display:block}
       <button class="close-x" onclick="closeCond()">✕</button>
     </div>
     <div id="cond-body"></div>
-    <div class="cond-agree" onclick="toggleAgree()">
+    <div class="cond-agree" id="cond-agree-wrap" onclick="if(event.target.id!=='agree-cb') toggleAgree()">
       <input type="checkbox" id="agree-cb" onchange="updateProceed()"/>
-      <label for="agree-cb">أقر بأنني قرأت شروط التشغيل وأوافق عليها كاملاً، وأتحمل مسؤولية تشغيل الوحدة وفقاً لهذه الشروط.</label>
+      <label>أقر بأنني قرأت شروط التشغيل وأوافق عليها كاملاً، وأتحمل مسؤولية تشغيل الوحدة وفقاً لهذه الشروط.</label>
     </div>
     <button class="cond-go" id="cond-proceed" disabled onclick="doDownload()">المتابعة والتنزيل ↓</button>
     <button class="cond-go tg-btn" style="margin-top:8px;opacity:1;cursor:pointer" onclick="window.open('https://t.me/ModiumX','_blank')">✈ انضم لقناتنا على تيليجرام</button>
@@ -415,6 +424,8 @@ const fbApp = initializeApp(firebaseConfig);
 const db    = getFirestore(fbApp);
 
 let APP=null, ALL_APPS=[], dlUrl=null;
+const SIMILAR_PAGE_SIZE = 8;
+let similarItems = [], similarPage = 1;
 let favs = JSON.parse(localStorage.getItem('mx-favs') || '[]');
 
 // ── THEME (متزامن مع الصفحة الرئيسية) ──
@@ -628,18 +639,12 @@ function renderApp(){
       </div>`).join('');
   }
 
-  const similar = findSimilarApps(a, ALL_APPS).slice(0,8);
+  const similar = findSimilarApps(a, ALL_APPS);
   if (similar.length) {
     document.getElementById('sec-similar').style.display='block';
-    document.getElementById('similar-grid').innerHTML = similar.map(x=>{
-      const xSlug = x.seoSlug || (x.packageId||x.id||'').replace(/\./g,'-');
-      return `<a href="app-page.html?app=${encodeURIComponent(xSlug)}" class="sim-card">
-        <div class="sim-icon">${iconHtml(x)}</div>
-        <div class="sim-name">${x.name}</div>
-        <div class="sim-dev">${x.developer}</div>
-        <div class="sim-rate">★ ${x.rating||'-'}</div>
-      </a>`;
-    }).join('');
+    similarItems = similar;
+    similarPage = 1;
+    renderSimilarPage();
   }
 
   updateFavBtn();
@@ -651,19 +656,26 @@ function renderApp(){
 
 window.triggerDownload = function(){
   if (!APP) return;
-  const conds = normConds(APP.conditions);
-  if (!conds.length) { doDownload(); return; }
   openCond();
 };
 function openCond(){
   const a = APP;
   const conds = normConds(a.conditions);
-  document.getElementById('cond-app-title').textContent = `${a.name} — شروط التشغيل`;
-  document.getElementById('cond-body').innerHTML = conds.map((c,i)=>`
-    <div class="cond-item"><div class="cond-n">${i+1}</div><div class="cond-txt">${c}</div></div>`).join('');
-  document.getElementById('agree-cb').checked = false;
+  const hasConds = conds.length > 0;
+  const agreeWrap = document.getElementById('cond-agree-wrap');
   const btn = document.getElementById('cond-proceed');
-  btn.disabled = true; btn.classList.remove('on');
+  document.getElementById('cond-app-title').textContent = hasConds ? `${a.name} — شروط التشغيل` : `${a.name} — تنزيل الوحدة`;
+  if (hasConds){
+    document.getElementById('cond-body').innerHTML = conds.map((c,i)=>`
+      <div class="cond-item"><div class="cond-n">${i+1}</div><div class="cond-txt">${c}</div></div>`).join('');
+    agreeWrap.style.display = '';
+    document.getElementById('agree-cb').checked = false;
+    btn.disabled = true; btn.classList.remove('on');
+  } else {
+    document.getElementById('cond-body').innerHTML = `<div style="padding:6px 0 4px;color:var(--ink-dim);font-size:13px">لا توجد شروط خاصة لهذه الوحدة — يمكنك المتابعة للتنزيل مباشرة.</div>`;
+    agreeWrap.style.display = 'none';
+    btn.disabled = false; btn.classList.add('on');
+  }
   document.getElementById('cond-modal').classList.add('open');
   document.body.style.overflow = 'hidden';
 }
@@ -812,6 +824,47 @@ function tokenize(s){
   return (s||'').toLowerCase().split(/[\s,،.!؟\-_/\\|:;"'()«»]+/).map(w=>w.trim()).filter(w=>w.length>1 && !AR_STOP.has(w));
 }
 // وحدات مشابهة: تُحسب اعتماداً على تشابه كلمات الوصف بالإضافة لنفس التصنيف/المطوّر
+// ── ترقيم صفحات "وحدات مشابهة" ──
+function renderSimilarPage(){
+  const grid = document.getElementById('similar-grid');
+  const pagWrap = document.getElementById('similar-pagination');
+  grid.innerHTML = '';
+  if (!similarItems.length) { pagWrap.innerHTML=''; return; }
+  const totalPages = Math.max(1, Math.ceil(similarItems.length / SIMILAR_PAGE_SIZE));
+  similarPage = Math.min(Math.max(1, similarPage), totalPages);
+  const start = (similarPage-1) * SIMILAR_PAGE_SIZE;
+  grid.innerHTML = similarItems.slice(start, start+SIMILAR_PAGE_SIZE).map(x=>{
+    const xSlug = x.seoSlug || (x.packageId||x.id||'').replace(/\./g,'-');
+    return `<a href="app-page.html?app=${encodeURIComponent(xSlug)}" class="sim-card">
+      <div class="sim-icon">${iconHtml(x)}</div>
+      <div class="sim-name">${x.name}</div>
+      <div class="sim-dev">${x.developer}</div>
+      <div class="sim-rate">★ ${x.rating||'-'}</div>
+    </a>`;
+  }).join('');
+  pagWrap.innerHTML = buildPagination(similarPage, totalPages, 'goToSimilarPage');
+}
+window.goToSimilarPage = function(p){
+  similarPage = p;
+  renderSimilarPage();
+  document.getElementById('sec-similar').scrollIntoView({behavior:'smooth', block:'start'});
+};
+function buildPagination(current, total, fnName){
+  if (total <= 1) return '';
+  const pages = new Set([1, total]);
+  for (let p = current-1; p <= current+1; p++) if (p > 1 && p < total) pages.add(p);
+  const sorted = [...pages].sort((a,b)=>a-b);
+  let html = `<div class="page-btn ${current===1?'disabled':''}" onclick="${fnName}(${current-1})">‹</div>`;
+  let prev = 0;
+  sorted.forEach(p=>{
+    if (p - prev > 1) html += `<span class="page-dots">…</span>`;
+    html += `<div class="page-btn ${p===current?'on':''}" onclick="${fnName}(${p})">${p}</div>`;
+    prev = p;
+  });
+  html += `<div class="page-btn ${current===total?'disabled':''}" onclick="${fnName}(${current+1})">›</div>`;
+  return html;
+}
+
 function findSimilarApps(app, all){
   const baseWords = new Set(tokenize(app.description));
   const scored = all.filter(x=>x.id!==app.id).map(x=>{

@@ -11,7 +11,11 @@
 <meta property="og:description" content="منصة الوحدات البرمجية — حمّل تطبيقاتك بثقة."/>
 <meta property="og:type" content="website"/>
 <meta property="og:url" content="https://modiumx.github.io/web/"/>
-<meta property="og:image" content="https://modiumx.github.io/web/icons/icon-192.png"/>
+<meta property="og:image" content="https://modiumx.github.io/web/og-image.jpg"/>
+<meta property="og:image:width" content="1200"/>
+<meta property="og:image:height" content="630"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://modiumx.github.io/web/og-image.jpg"/>
 <link rel="manifest" href="manifest.json"/>
 <link rel="apple-touch-icon" href="icons/icon-192.png"/>
 <title>ModiumX | موديوم إكس — منصة الوحدات البرمجية</title>
@@ -108,8 +112,9 @@ button{font-family:inherit}
 .pg{display:none}.pg.on{display:block}
 
 /* ── HERO ── */
-.hero{margin:0 16px 22px;border:1px solid var(--line);border-radius:var(--r3);padding:26px 22px;position:relative;overflow:hidden;background:linear-gradient(160deg,var(--panel) 0%,var(--bg2) 100%)}
+.hero{margin:0 16px 22px;border:1px solid var(--line);border-radius:var(--r3);padding:26px 22px;position:relative;overflow:hidden;background:linear-gradient(160deg,var(--panel) 0%,var(--bg2) 100%);display:flex;align-items:center;gap:26px;flex-wrap:wrap}
 .hero::after{content:'';position:absolute;inset:0;background:linear-gradient(120deg,transparent 60%,var(--ember-soft) 100%);pointer-events:none}
+.hero-text{flex:1 1 260px;min-width:0;position:relative}
 .hero-eyebrow{font:600 11px var(--mono);letter-spacing:1.5px;color:var(--ember);text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:6px}
 .hero-eyebrow::before{content:'';width:6px;height:6px;background:var(--ember);border-radius:1px}
 .hero-title{font:900 24px/1.35 var(--disp);margin-bottom:8px;position:relative}
@@ -120,6 +125,9 @@ button{font-family:inherit}
 .spec:last-child{border-left:none}
 .spec-val{font:800 19px var(--mono);color:var(--ink)}
 .spec-lbl{font:600 10px var(--mono);color:var(--ink-faint);letter-spacing:1px;margin-top:2px;text-transform:uppercase}
+.hero-visual{flex:1 1 260px;min-width:220px;max-width:340px;position:relative;border-radius:var(--r2);overflow:hidden;border:1px solid var(--line2);box-shadow:var(--shadow);aspect-ratio:1136/640;background:var(--bg2)}
+.hero-visual video{width:100%;height:100%;object-fit:cover;display:block}
+@media (max-width:640px){ .hero-visual{max-width:100%;order:2} .hero-text{order:1} }
 
 /* ── SECTION HEAD ── */
 .shead{display:flex;align-items:baseline;justify-content:space-between;padding:6px 16px 12px;gap:10px}
@@ -145,7 +153,7 @@ button{font-family:inherit}
 .mod-badge.hot{background:rgba(239,83,97,.15);color:var(--bad)}
 .mod-badge.new{background:var(--cyan-soft);color:var(--cyan)}
 .mod-modtag{position:absolute;top:10px;right:10px;font:800 8px var(--mono);color:var(--cyan);background:var(--cyan-soft);border:1px solid rgba(43,224,200,.3);border-radius:3px;padding:2px 6px;letter-spacing:.5px;z-index:2}
-.mod-fav{position:absolute;top:8px;left:8px;width:28px;height:28px;background:var(--bg2);border:1px solid var(--line);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;cursor:pointer;z-index:2}
+.mod-fav{position:absolute;top:40px;left:8px;width:28px;height:28px;background:var(--bg2);border:1px solid var(--line);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;cursor:pointer;z-index:2}
 .mod-icon{width:52px;height:52px;border-radius:var(--r1);margin-bottom:10px;background:var(--ember-soft);display:flex;align-items:center;justify-content:center;font-size:24px;overflow:hidden}
 .mod-icon img{width:100%;height:100%;object-fit:cover;border-radius:var(--r1)}
 .mod-name{font-size:14px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:2px}
@@ -210,7 +218,7 @@ button{font-family:inherit}
 .cond-t{font-size:13px;color:var(--ink-dim);line-height:1.6}
 .cond-agree{display:flex;gap:10px;align-items:flex-start;padding:14px 4px;cursor:pointer}
 .cond-agree label{font-size:12px;color:var(--ink-dim);line-height:1.6;cursor:pointer}
-.cond-agree input{margin-top:3px;accent-color:var(--ember);flex-shrink:0}
+.cond-agree input{margin-top:3px;accent-color:var(--ember);flex-shrink:0;width:18px;height:18px;border:1px solid var(--line2);border-radius:3px;cursor:pointer}
 .cond-go{width:100%;padding:14px;background:var(--ink-faint);color:var(--bg);border:none;border-radius:var(--r1);font:800 14px var(--disp);cursor:not-allowed;opacity:.5;transition:all var(--tr)}
 .cond-go.on{background:var(--ember);cursor:pointer;opacity:1}
 
@@ -237,7 +245,42 @@ button{font-family:inherit}
 @keyframes spin{to{transform:translateY(-50%) rotate(360deg)}}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
 
+/* ── CATEGORY PREVIEW ROWS (homepage) — بانر + أيقونة صغيرة + اسم لكل تطبيق ── */
+.cat-block{margin-bottom:6px}
+.cs-strip{display:flex;gap:16px;padding:0 16px 6px;overflow-x:auto;scrollbar-width:none;align-items:flex-start}
+.cs-strip::-webkit-scrollbar{display:none}
+.cs-card{flex:0 0 190px;cursor:pointer}
+.cs-card-media{position:relative;margin-bottom:16px}
+.cs-card-banner{width:100%;aspect-ratio:16/9;border-radius:var(--r2);overflow:hidden;border:1px solid var(--line2);background:var(--ember-soft);box-shadow:var(--shadow);display:flex;align-items:center;justify-content:center;font-size:30px;transition:transform var(--tr)}
+.cs-card-banner img{width:100%;height:100%;object-fit:cover}
+.cs-card:hover .cs-card-banner{transform:translateY(-3px)}
+.cs-card-icon{position:absolute;bottom:-14px;right:12px;width:42px;height:42px;border-radius:9px;overflow:hidden;border:2px solid var(--bg2);background:var(--panel);box-shadow:0 3px 10px rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;font-size:16px}
+.cs-card-icon img{width:100%;height:100%;object-fit:cover;border-radius:7px}
+.cs-card-name{font-size:13px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cs-card-dev{font-size:11px;color:var(--ink-faint);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:1px}
+.cs-card-rate{font:700 11px var(--mono);color:var(--warn);margin-top:3px}
+
+/* ── PAGINATION ── */
+.pagination{display:flex;align-items:center;justify-content:center;gap:6px;padding:22px 16px 6px;flex-wrap:wrap}
+.page-btn{min-width:34px;height:34px;padding:0 8px;background:var(--panel);border:1px solid var(--line);border-radius:var(--r1);display:flex;align-items:center;justify-content:center;font:700 12px var(--mono);color:var(--ink-dim);cursor:pointer;transition:all var(--tr);user-select:none}
+.page-btn:hover{border-color:var(--line2);color:var(--ink)}
+.page-btn.on{background:var(--ember);border-color:var(--ember);color:#141014}
+.page-btn.disabled{opacity:.35;cursor:not-allowed;pointer-events:none}
+.page-dots{color:var(--ink-faint);font:700 12px var(--mono);padding:0 4px;display:flex;align-items:center}
+
+@media (max-width:640px){ .cs-card{flex-basis:160px} }
+
 @media (min-width:700px){ .grid{grid-template-columns:repeat(4,1fr)} }
+
+/* ── MOBILE HEADER / SEARCH FIX ── */
+@media (max-width:640px){
+  :root{--head-h:100px}
+  #site-head{flex-wrap:wrap;align-items:center;height:auto;padding:10px 12px;gap:8px 14px}
+  .brand{order:1}
+  .head-actions{order:2}
+  .search-shell{order:3;flex-basis:100%;width:100%}
+  .brand-tag{display:none}
+}
 </style>
 </head>
 <body>
@@ -272,13 +315,21 @@ button{font-family:inherit}
   <!-- HOME -->
   <div id="home-pg" class="pg on">
     <div class="hero">
-      <div class="hero-eyebrow">Modiumx / core</div>
-      <h1 class="hero-title">وحدات مُختارة<br/><i>بمعايير واضحة</i></h1>
-      <div class="hero-sub">كل وحدة برمجية على المنصة تمر بشروط تشغيل صريحة قبل التنزيل، بلا مفاجآت.</div>
-      <div class="spec-row">
-        <div class="spec"><div class="spec-val" id="stat-apps">0</div><div class="spec-lbl">وحدة</div></div>
-        <div class="spec"><div class="spec-val" id="stat-dl">0</div><div class="spec-lbl">تنزيل</div></div>
-        <div class="spec"><div class="spec-val">100%</div><div class="spec-lbl">شفافية</div></div>
+      <div class="hero-text">
+        <div class="hero-eyebrow">Modiumx / core</div>
+        <h1 class="hero-title">وحدات مُختارة<br/><i>بمعايير واضحة</i></h1>
+        <div class="hero-sub">كل وحدة برمجية على المنصة تمر بشروط تشغيل صريحة قبل التنزيل، بلا مفاجآت.</div>
+        <div class="spec-row">
+          <div class="spec"><div class="spec-val" id="stat-apps">0</div><div class="spec-lbl">وحدة</div></div>
+          <div class="spec"><div class="spec-val" id="stat-dl">0</div><div class="spec-lbl">تنزيل</div></div>
+          <div class="spec"><div class="spec-val">100%</div><div class="spec-lbl">شفافية</div></div>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <video autoplay loop muted playsinline poster="media/hero-animation-poster.jpg" aria-label="عرض متحرك لمنصة ModiumX">
+          <source src="media/hero-animation.webm" type="video/webm"/>
+          <source src="media/hero-animation.mp4" type="video/mp4"/>
+        </video>
       </div>
     </div>
 
@@ -292,11 +343,19 @@ button{font-family:inherit}
       <div class="chip" data-cat="finance" onclick="filterCat(this,'finance')">▦ مالية</div>
     </div>
 
-    <div class="shead"><div class="stitle">مُميّزة الآن</div></div>
-    <div class="feat-strip" id="feat-strip"></div>
+    <div id="browse-all-view">
+      <div class="shead"><div class="stitle">مُميّزة الآن</div></div>
+      <div class="feat-strip" id="feat-strip"></div>
 
-    <div class="shead"><div class="stitle">كل الوحدات</div></div>
-    <div class="grid" id="apps-grid"></div>
+      <div id="cat-rows"></div>
+    </div>
+
+    <div id="cat-filtered-view" style="display:none">
+      <div class="shead"><div class="stitle" id="all-title">كل الوحدات</div></div>
+      <div class="grid" id="apps-grid"></div>
+      <div class="pagination" id="apps-pagination"></div>
+    </div>
+
     <div style="height:10px"></div>
   </div>
 
@@ -307,6 +366,7 @@ button{font-family:inherit}
       <div style="font:600 12px var(--mono);color:var(--ink-faint);margin-top:6px" id="search-count"></div>
     </div>
     <div class="grid" id="search-grid"></div>
+    <div class="pagination" id="search-pagination"></div>
   </div>
 
   <!-- FAVORITES -->
@@ -333,7 +393,7 @@ button{font-family:inherit}
     <div class="cond-title" id="cond-name">شروط التشغيل</div>
     <div class="cond-sub">اقرأ الشروط التالية قبل المتابعة</div>
     <div id="cond-list"></div>
-    <div class="cond-agree" onclick="toggleAgree()">
+    <div class="cond-agree" id="cond-agree-wrap" onclick="if(event.target.id!=='agree-cb') toggleAgree()">
       <input type="checkbox" id="agree-cb" onchange="updateProceed()"/>
       <label>أقر بأنني قرأت جميع شروط التشغيل وأوافق عليها، وأتحمل كامل المسؤولية عن تشغيل الوحدة وفق هذه الشروط.</label>
     </div>
@@ -412,6 +472,12 @@ window.toggleTheme = function() {
     document.getElementById('theme-btn').textContent = '◑';
   }
 })();
+(function(){
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const v = document.querySelector('.hero-visual video');
+    if (v) { v.removeAttribute('autoplay'); v.pause(); }
+  }
+})();
 
 // ── NAV ──
 window.navTo = function(el, pageId) {
@@ -459,11 +525,12 @@ window.closeAd = function(){
 async function loadApps() {
   renderSkeletons();
   try {
-    const snap = await getDocs(query(collection(db,'apps'), orderBy('downloads','desc'), limit(100)));
+    // limit مرفوع لدعم عرض آلاف الوحدات — يتم ترقيمها (pagination) في الواجهة
+    const snap = await getDocs(query(collection(db,'apps'), orderBy('downloads','desc'), limit(2000)));
     allApps = snap.docs.map(d => ({ id:d.id, ...d.data() }));
   } catch(e) { allApps = getDemoApps(); }
-  renderGrid(allApps);
   renderFeatured(allApps.filter(a=>a.featured||a.badge==='hot').slice(0,8) || allApps.slice(0,6));
+  renderCategoryRows(allApps);
   document.getElementById('stat-apps').textContent = allApps.length;
   const totalDL = allApps.reduce((s,a)=>s+(a.downloads||0),0);
   document.getElementById('stat-dl').textContent = totalDL>=1000 ? (totalDL/1000).toFixed(1)+'k' : totalDL;
@@ -491,25 +558,102 @@ function applyUrlParams(){
   if (dev) {
     const devN = dev.trim().toLowerCase();
     const res = allApps.filter(a => (a.developer||'').trim().toLowerCase() === devN);
-    document.getElementById('search-title').textContent = `تطبيقات المطوّر: ${dev}`;
-    document.getElementById('search-count').textContent = `${res.length} تطبيق`;
-    const grid = document.getElementById('search-grid');
-    grid.innerHTML = '';
-    if (!res.length) grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--ink-faint)">لا توجد تطبيقات أخرى لهذا المطوّر حالياً</div>`;
-    else res.forEach(a=>grid.appendChild(buildCard(a)));
-    navTo(null,'search-pg');
+    showSearchResults(res, `تطبيقات المطوّر: ${dev}`, `${res.length} تطبيق`);
   } else if (cat) {
     const chip = document.querySelector(`.chip[data-cat="${cat}"]`);
     if (chip) filterCat(chip, cat);
   }
 }
 
+// ── ترقيم الصفحات (Pagination) ──
+const GRID_PAGE_SIZE = 24;
+let gridApps = [], gridPage = 1;
+
 function renderGrid(apps) {
-  const grid = document.getElementById('apps-grid');
-  grid.innerHTML = '';
-  if (!apps.length) { grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--ink-faint)">لا توجد وحدات في هذا التصنيف</div>`; return; }
-  apps.forEach(app => grid.appendChild(buildCard(app)));
+  gridApps = apps;
+  gridPage = 1;
+  renderGridPage();
 }
+function renderGridPage(){
+  const grid = document.getElementById('apps-grid');
+  const pagWrap = document.getElementById('apps-pagination');
+  grid.innerHTML = '';
+  if (!gridApps.length) {
+    grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--ink-faint)">لا توجد وحدات في هذا التصنيف</div>`;
+    pagWrap.innerHTML = '';
+    return;
+  }
+  const totalPages = Math.max(1, Math.ceil(gridApps.length / GRID_PAGE_SIZE));
+  gridPage = Math.min(Math.max(1, gridPage), totalPages);
+  const start = (gridPage-1) * GRID_PAGE_SIZE;
+  gridApps.slice(start, start+GRID_PAGE_SIZE).forEach(app => grid.appendChild(buildCard(app)));
+  pagWrap.innerHTML = buildPagination(gridPage, totalPages, 'goToGridPage');
+}
+window.goToGridPage = function(p){
+  gridPage = p;
+  renderGridPage();
+  document.getElementById('cat-filtered-view').scrollIntoView({behavior:'smooth', block:'start'});
+};
+
+// أداة ترقيم عامة تُستخدم لكل من "كل الوحدات" ونتائج البحث
+function buildPagination(current, total, fnName){
+  if (total <= 1) return '';
+  const pages = new Set([1, total]);
+  for (let p = current-1; p <= current+1; p++) if (p > 1 && p < total) pages.add(p);
+  const sorted = [...pages].sort((a,b)=>a-b);
+  let html = `<div class="page-btn ${current===1?'disabled':''}" onclick="${fnName}(${current-1})">‹</div>`;
+  let prev = 0;
+  sorted.forEach(p=>{
+    if (p - prev > 1) html += `<span class="page-dots">…</span>`;
+    html += `<div class="page-btn ${p===current?'on':''}" onclick="${fnName}(${p})">${p}</div>`;
+    prev = p;
+  });
+  html += `<div class="page-btn ${current===total?'disabled':''}" onclick="${fnName}(${current+1})">›</div>`;
+  return html;
+}
+
+// ── أقسام التصنيفات في الصفحة الرئيسية (أول وحدة تظهر بصورة مربعة كبيرة) ──
+const CAT_META = [
+  { cat:'games',     label:'ألعاب', icon:'◆' },
+  { cat:'social',    label:'تواصل', icon:'◇' },
+  { cat:'tools',     label:'أدوات', icon:'▣' },
+  { cat:'education', label:'تعليم', icon:'▤' },
+  { cat:'health',    label:'صحة',   icon:'▥' },
+  { cat:'finance',   label:'مالية', icon:'▦' },
+];
+function renderCategoryRows(apps){
+  const wrap = document.getElementById('cat-rows');
+  wrap.innerHTML = '';
+  CAT_META.forEach(meta=>{
+    const list = apps.filter(a=>a.category===meta.cat).slice(0,8);
+    if (!list.length) return;
+    const block = document.createElement('div');
+    block.className = 'cat-block';
+    block.innerHTML = `
+      <div class="shead">
+        <div class="stitle">${meta.icon} ${meta.label}</div>
+        <div class="slink" onclick="viewCategoryAll('${meta.cat}')">عرض الكل ›</div>
+      </div>
+      <div class="cs-strip">
+        ${list.map(a=>`
+          <div class="cs-card" onclick="openApp(${JSON.stringify(a).replace(/"/g,'&quot;')})">
+            <div class="cs-card-media">
+              <div class="cs-card-banner">${bannerImgHtml(a)}</div>
+              <div class="cs-card-icon">${iconHtml(a)}</div>
+            </div>
+            <div class="cs-card-name">${a.name}</div>
+            <div class="cs-card-dev">${a.developer||''}</div>
+            <div class="cs-card-rate">★ ${a.rating||'-'}</div>
+          </div>`).join('')}
+      </div>`;
+    wrap.appendChild(block);
+  });
+}
+window.viewCategoryAll = function(cat){
+  const chip = document.querySelector(`.chip[data-cat="${cat}"]`);
+  if (chip) filterCat(chip, cat);
+  document.getElementById('cat-rail').scrollIntoView({behavior:'smooth', block:'start'});
+};
 
 function renderFeatured(apps) {
   const strip = document.getElementById('feat-strip');
@@ -547,6 +691,12 @@ function iconHtml(app){
   if (app.icon && app.icon.startsWith('http')) return `<img src="${app.icon}" alt="${app.name}" loading="lazy" onerror="this.parentElement.textContent='◧'"/>`;
   return app.icon || '◧';
 }
+// صورة الترويسة (نفس الصورة اللي بتظهر في أعلى صفحة التطبيق) — تُستخدم للكارت الكبير في صفوف التصنيفات
+function bannerImgHtml(app){
+  const src = app.headerImage || app.icon;
+  if (src && src.startsWith('http')) return `<img src="${src}" alt="${app.name}" loading="lazy" onerror="this.parentElement.textContent='◧'"/>`;
+  return app.icon || '◧';
+}
 
 function renderSkeletons(){
   document.getElementById('apps-grid').innerHTML = Array(6).fill(`
@@ -563,7 +713,19 @@ window.filterCat = function(el, cat){
   document.querySelectorAll('.chip').forEach(c=>c.classList.remove('on'));
   el.classList.add('on');
   currentCat = cat;
-  renderGrid(cat==='all' ? allApps : allApps.filter(a=>a.category===cat));
+  const browseAll = document.getElementById('browse-all-view');
+  const filteredView = document.getElementById('cat-filtered-view');
+  if (cat === 'all') {
+    browseAll.style.display = '';
+    filteredView.style.display = 'none';
+    return;
+  }
+  const meta = CAT_META.find(m=>m.cat===cat);
+  const titleEl = document.getElementById('all-title');
+  if (titleEl) titleEl.textContent = meta ? `كل وحدات ${meta.label}` : 'كل الوحدات';
+  browseAll.style.display = 'none';
+  filteredView.style.display = '';
+  renderGrid(allApps.filter(a=>a.category===cat));
 };
 
 // ── SEARCH ──
@@ -604,7 +766,7 @@ function tokenize(s){
   return (s||'').toLowerCase().split(/[\s,،.!؟\-_/\\|:;"'()«»]+/).map(w=>w.trim()).filter(w=>w.length>1 && !AR_STOP.has(w));
 }
 // بحث ذكي: يطابق اسم التطبيق مباشرة، ويستفيد أيضاً من كلمات الوصف والمطوّر والتصنيف
-function localSearch(q){
+function localSearch(q, capLimit=500){
   const ql = (q||'').toLowerCase().trim();
   if (!ql) return [];
   const qWords = tokenize(ql);
@@ -627,7 +789,7 @@ function localSearch(q){
     return { app, score };
   }).filter(x=>x.score>0);
   scored.sort((a,b)=>b.score-a.score);
-  return scored.slice(0,15).map(x=>x.app);
+  return scored.slice(0,capLimit).map(x=>x.app);
 }
 function dedupe(apps){ const seen=new Set(); return apps.filter(a=>{ if (seen.has(a.id)) return false; seen.add(a.id); return true; }); }
 
@@ -650,15 +812,41 @@ window.selectResult = function(id){
 function fullSearch(q){
   hideDrop();
   const res = localSearch(q);
-  document.getElementById('search-title').textContent = `نتائج: "${q}"`;
-  document.getElementById('search-count').textContent = `${res.length} نتيجة`;
-  const grid = document.getElementById('search-grid');
-  grid.innerHTML = '';
-  if (!res.length) grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--ink-faint)">لا توجد نتائج لـ "${q}"</div>`;
-  else res.forEach(a=>grid.appendChild(buildCard(a)));
-  navTo(null,'search-pg');
+  showSearchResults(res, `نتائج: "${q}"`, `${res.length} نتيجة`);
 }
 function hideDrop(){ qDrop.classList.remove('on'); }
+
+// ── نتائج البحث/المطوّر مع ترقيم صفحات ──
+const SEARCH_PAGE_SIZE = 24;
+let searchItems = [], searchPage = 1;
+function showSearchResults(list, title, countText){
+  document.getElementById('search-title').textContent = title;
+  document.getElementById('search-count').textContent = countText;
+  searchItems = list;
+  searchPage = 1;
+  renderSearchPage();
+  navTo(null,'search-pg');
+}
+function renderSearchPage(){
+  const grid = document.getElementById('search-grid');
+  const pagWrap = document.getElementById('search-pagination');
+  grid.innerHTML = '';
+  if (!searchItems.length) {
+    grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--ink-faint)">لا توجد نتائج</div>`;
+    pagWrap.innerHTML = '';
+    return;
+  }
+  const totalPages = Math.max(1, Math.ceil(searchItems.length / SEARCH_PAGE_SIZE));
+  searchPage = Math.min(Math.max(1, searchPage), totalPages);
+  const start = (searchPage-1) * SEARCH_PAGE_SIZE;
+  searchItems.slice(start, start+SEARCH_PAGE_SIZE).forEach(a=>grid.appendChild(buildCard(a)));
+  pagWrap.innerHTML = buildPagination(searchPage, totalPages, 'goToSearchPage');
+}
+window.goToSearchPage = function(p){
+  searchPage = p;
+  renderSearchPage();
+  document.getElementById('search-pg').scrollIntoView({behavior:'smooth', block:'start'});
+};
 
 // ── APP DETAIL → goes to app-page.html ──
 window.openApp = function(appData){
@@ -774,15 +962,24 @@ onAuthStateChanged(auth, user=>{
 
 // ── CONDITIONS / DOWNLOAD FLOW ──
 window.showConditions = function(appData){
-  document.getElementById('cond-name').textContent = appData.name + ' — شروط التشغيل';
   const conds = Array.isArray(appData.conditions) ? appData.conditions
     : (typeof appData.conditions === 'string' ? appData.conditions.split('\n').filter(Boolean)
-    : ['الوحدة مسؤوليتك الشخصية بعد التنزيل','تأكد من توافق جهازك مع المتطلبات']);
-  document.getElementById('cond-list').innerHTML = conds.map((c,i)=>`
-    <div class="cond-item"><div class="cond-n">${i+1}</div><div class="cond-t">${c}</div></div>`).join('');
-  document.getElementById('agree-cb').checked = false;
+    : []);
+  const hasConds = conds.length > 0;
+  document.getElementById('cond-name').textContent = hasConds ? (appData.name + ' — شروط التشغيل') : (appData.name + ' — تنزيل الوحدة');
+  const agreeWrap = document.getElementById('cond-agree-wrap');
   const btn = document.getElementById('cond-go');
-  btn.disabled = true; btn.classList.remove('on');
+  if (hasConds){
+    document.getElementById('cond-list').innerHTML = conds.map((c,i)=>`
+      <div class="cond-item"><div class="cond-n">${i+1}</div><div class="cond-t">${c}</div></div>`).join('');
+    agreeWrap.style.display = '';
+    document.getElementById('agree-cb').checked = false;
+    btn.disabled = true; btn.classList.remove('on');
+  } else {
+    document.getElementById('cond-list').innerHTML = `<div style="padding:6px 0 4px;color:var(--ink-dim);font-size:13px">لا توجد شروط خاصة لهذه الوحدة — يمكنك المتابعة للتنزيل مباشرة.</div>`;
+    agreeWrap.style.display = 'none';
+    btn.disabled = false; btn.classList.add('on');
+  }
   document.getElementById('cond-modal').classList.add('on');
   downloadUrl = appData.directUrl || appData.downloadUrl || null;
   currentApp = appData;
@@ -795,7 +992,9 @@ window.updateProceed = function(){
   btn.disabled = !agreed; btn.classList.toggle('on', agreed);
 };
 window.proceedDL = function(){
-  if (!document.getElementById('agree-cb').checked) return;
+  const agreeWrap = document.getElementById('cond-agree-wrap');
+  const needsAgree = agreeWrap.style.display !== 'none';
+  if (needsAgree && !document.getElementById('agree-cb').checked) return;
   closeCond();
   if (downloadUrl && downloadUrl !== '#') { window.open(downloadUrl, '_blank'); showToast('جارٍ فتح رابط التنزيل ↓'); }
   else showToast('لا يوجد رابط تنزيل لهذه الوحدة');
